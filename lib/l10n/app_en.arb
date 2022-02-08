@@ -1,0 +1,31 @@
+{
+  "topRated": "Top Rated",
+  "mostPopular": "Most Popular",
+
+  "resultsHeader": "Results for ",
+
+  "about": "About the movie",
+  "title": "Original title",
+  "lang": "Original language",
+  "overview": "Overview",
+  "genres": "Genres",
+  "comps": "Companies involved",
+  "release": "Release",
+  "votes": "Vote Count",
+  "rate": "Rating,",
+  "status": "Status",
+  "notFount": "Not found",
+
+  "cast": "Cast",
+
+  "gest": "special guest",
+
+  "errorLoadingGrid": "Error while loading ",
+
+  "nextPage": "Next page",
+  "previousPage": "Previous page",
+  "sbHint": "Search for a movie",
+
+  "movieInfo": "Movie Information",
+  "footer": "All movie information from "
+}

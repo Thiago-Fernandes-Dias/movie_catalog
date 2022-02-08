@@ -1,0 +1,32 @@
+{
+  "topRated": "Los más votados",
+  "mostPopular": "Más popular",
+
+  "resultsHeader": "Resultados para",
+
+  "about": "Sobre la película",
+  "title": "Titulo original",
+  "lang": "Idioma original",
+  "overview": "Visión general",
+  "genres": "Géneros",
+  "comps": "Empresas involucradas",
+  "release": "fecha de lanzamiento",
+  "votes": "Vote Count",
+  "rate": "Recuento de votos",
+  "status": "Estado",
+  "notFount": "Extraviado...",
+
+  "cast": "Emitir",
+
+  "gest": "Invitada(o) especial",
+
+  "errorLoadingGrid": "Error al cargar ",
+
+  "nextPage": "Siguiente página",
+  "previousPage": "Pagina anterior",
+
+  "sbHint": "Buscar una pelicula",
+
+  "movieInfo": "Información de la película",
+  "footer": "Información proporcionada por"
+}
