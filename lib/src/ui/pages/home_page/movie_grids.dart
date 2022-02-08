@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/l10n/generated/app_localizations.dart';
-import 'package:movie_list/src/components/movie/movie_view.dart';
 import 'package:movie_list/src/models/movie_info.dart';
 import 'package:movie_list/src/models/movie_list.dart';
 import 'package:movie_list/src/services/movies_service.dart';
 import 'package:movie_list/src/shared/network_loading.dart' as net;
 import 'package:movie_list/src/shared/text_format.dart' as text;
 import 'package:movie_list/src/shared/tmdb.dart' as tmdb;
+import 'package:movie_list/src/ui/l10n/app_localizations.dart';
+import 'package:movie_list/src/ui/pages/movie_details_page/movie_details_page.dart';
 import 'package:provider/provider.dart';
 
 class MovieGrids extends StatelessWidget {
@@ -21,7 +21,7 @@ class MovieGrids extends StatelessWidget {
         mainAxisSpacing: 20,
       ),
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: 10,
       itemBuilder: (context, index) {
         return GestureDetector(
@@ -30,7 +30,7 @@ class MovieGrids extends StatelessWidget {
           ),
           child: net.fetchImage(
             '${tmdb.baseImagesUrl}/${movies[index]?.posterPath}',
-            'images/noposter.jpg',
+            'assets/jpg/noposter.jpg',
           ),
         );
       },
@@ -47,9 +47,9 @@ class MovieGrids extends StatelessWidget {
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return net.loadingField();
-        } else if (snapshot.hasData && snapshot.data!.results.length > 0) {
+        } else if (snapshot.hasData && snapshot.data!.results.isNotEmpty) {
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             child: Column(
               children: [
                 text.fieldTitle(gridTitle),
@@ -70,7 +70,7 @@ class MovieGrids extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MoviesService moviesService = Provider.of<MoviesService>(context);
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = AppLocalizations.of(context);
 
     return Column(
       children: [

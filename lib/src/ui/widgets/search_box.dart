@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/l10n/generated/app_localizations.dart';
-import 'package:movie_list/src/components/controllers/search_controller.dart';
+import 'package:movie_list/src/controllers/search_controller.dart';
+import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class SearchBox extends StatelessWidget {
-  const SearchBox({
+class SearchBar extends StatelessWidget {
+  const SearchBar({
     Key? key,
   }) : super(key: key);
 
@@ -16,8 +16,8 @@ class SearchBox extends StatelessWidget {
     );
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-      color: Color(0xff0c0c0c),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      color: const Color(0xff0c0c0c),
       child: Focus(
         onFocusChange: (hasFocus) {
           if (!hasFocus) searchController.start(inputController.text);
@@ -25,18 +25,18 @@ class SearchBox extends StatelessWidget {
         child: TextField(
           controller: inputController,
           decoration: InputDecoration(
-            enabledBorder: UnderlineInputBorder(
+            enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.grey),
             ),
-            hintText: AppLocalizations.of(context)!.sbHint,
+            hintText: AppLocalizations.of(context).sbHint,
             hintStyle: TextStyle(color: Colors.grey.shade800),
-            contentPadding: EdgeInsets.only(left: 10, top: 15),
+            contentPadding: const EdgeInsets.only(left: 10, top: 15),
             suffixIcon: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.search,
                 color: Colors.grey,
               ),
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 10,
                 vertical: 10,
               ),

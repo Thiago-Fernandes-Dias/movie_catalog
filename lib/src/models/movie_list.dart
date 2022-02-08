@@ -18,8 +18,9 @@ class MovieList {
   factory MovieList.fromJson(Map<String, dynamic> json) {
     var parsedMovieInfo = <MovieInfo>[];
     json['results'].forEach((element) {
-      if (![null, ''].contains(element['release_date']))
+      if (![null, ''].contains(element['release_date'])) {
         parsedMovieInfo.add(MovieInfo.fromJson(element));
+      }
     });
 
     return MovieList(

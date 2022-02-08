@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:movie_list/src/controllers/search_controller.dart';
 import 'package:provider/provider.dart';
 
-import 'package:movie_list/src/components/controllers/search_controller.dart';
-
-import 'search_box.dart';
-import 'search_result.dart';
+import '../../widgets/search_box.dart';
 import 'movie_grids.dart';
+import 'search_result.dart';
 
 class Home extends StatefulWidget {
   final String title;
 
-  Home({Key? key, required this.title}) : super(key: key);
+  const Home({Key? key, required this.title}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -19,9 +18,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    final SearchController searchController = Provider.of<SearchController>(
-      context,
-    );
+    final SearchController searchController =
+        Provider.of<SearchController>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -32,12 +30,12 @@ class _HomeState extends State<Home> {
         child: Center(
           child: Column(
             children: [
-              SearchBox(),
+              const SearchBar(),
               Padding(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: searchController.currentTerm != ''
-                    ? SearchResult()
-                    : MovieGrids(),
+                    ? const SearchResult()
+                    : const MovieGrids(),
               ),
             ],
           ),
