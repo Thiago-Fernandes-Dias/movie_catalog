@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movie_list/src/services/movies_service.dart';
+import 'package:movie_list/src/ui/l10n/app_localizations.dart';
+import 'package:movie_list/src/ui/pages/home_page/home_page.dart';
 import 'package:provider/provider.dart';
 
-import 'package:movie_list/l10n/generated/app_localizations.dart';
-
-import 'components/controllers/search_controller.dart';
-import 'components/home/home.dart';
+import 'controllers/search_controller.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: Home(title: 'Movies'),
+        home: const Home(title: 'Movies'),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/l10n/generated/app_localizations.dart';
-import 'package:movie_list/src/components/controllers/search_controller.dart';
+import 'package:movie_list/src/controllers/search_controller.dart';
+import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class PageNav extends StatelessWidget {
@@ -16,13 +16,13 @@ class PageNav extends StatelessWidget {
     final SearchController searchController = Provider.of<SearchController>(
       context,
     );
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = AppLocalizations.of(context);
 
     final bool enableBack = searchController.currentPage > 1;
     final bool enableNext = searchController.currentPage < limit;
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -38,7 +38,7 @@ class PageNav extends StatelessWidget {
             iconSize: 20,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Text(
               '${searchController.currentPage}',
               style: TextStyle(

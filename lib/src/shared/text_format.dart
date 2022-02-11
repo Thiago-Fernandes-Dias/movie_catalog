@@ -9,10 +9,10 @@ Widget showMessage(String message, bool isError) {
   );
 
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
     child: Center(
       child: Text(
-        '$message',
+        message,
         style: msgStyle,
         textAlign: TextAlign.center,
       ),
@@ -21,14 +21,14 @@ Widget showMessage(String message, bool isError) {
 }
 
 Widget fieldTitle(String title) {
-  var titleStyle = TextStyle(
+  const titleStyle = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
   );
 
   return Container(
     alignment: Alignment.centerLeft,
-    padding: EdgeInsets.only(bottom: 20),
+    padding: const EdgeInsets.only(bottom: 20),
     child: Text(
       title,
       style: titleStyle,

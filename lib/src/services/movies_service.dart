@@ -5,7 +5,7 @@ import 'package:movie_list/src/models/credits.dart';
 import 'package:movie_list/src/models/movies_details.dart';
 import 'package:movie_list/src/models/movie_list.dart';
 
-import 'package:movie_list/src/shared/tmdb.dart' as tmdb;
+import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
 
 class MoviesService {
   Future<MovieList> fetchMoviesByTitle(String title, int page) async {

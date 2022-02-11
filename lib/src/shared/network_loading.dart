@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-Widget fetchImage(String url, String asset) {
+Widget fetchImage({
+  required String url,
+  required String assetOption,
+}) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(5.0),
     child: !url.contains('null')
@@ -13,14 +16,14 @@ Widget fetchImage(String url, String asset) {
             },
           )
         : Image.asset(
-            asset,
+            assetOption,
             fit: BoxFit.fitHeight,
           ),
   );
 }
 
 Widget loadingField() {
-  return Container(
+  return const SizedBox(
     width: 40,
     height: 1,
     child: LinearProgressIndicator(),
@@ -28,7 +31,7 @@ Widget loadingField() {
 }
 
 Widget loadingArea() {
-  return Center(
+  return const Center(
     child: CircularProgressIndicator(),
   );
 }

@@ -5,9 +5,8 @@ import 'package:movie_list/src/shared/network_loading.dart' as net;
 
 import 'package:movie_list/src/models/movies_details.dart';
 
-import 'package:movie_list/l10n/generated/app_localizations.dart';
-
 import 'package:movie_list/src/services/movies_service.dart';
+import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class MovieFields extends StatelessWidget {
@@ -19,16 +18,16 @@ class MovieFields extends StatelessWidget {
   }) : super(key: key);
 
   Widget movieData(String fieldName, String info) {
-    final movieField = TextStyle(
+    const movieField = TextStyle(
       fontWeight: FontWeight.w500,
       fontSize: 16,
     );
-    final movieInfo = TextStyle(
+    const movieInfo = TextStyle(
       fontWeight: FontWeight.w300,
     );
 
     return Container(
-      padding: EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 10),
       alignment: Alignment.centerLeft,
       child: RichText(
         textAlign: TextAlign.justify,
@@ -37,7 +36,7 @@ class MovieFields extends StatelessWidget {
           style: movieField,
           children: [
             TextSpan(
-              text: '$info',
+              text: info,
               style: movieInfo,
             ),
           ],
@@ -47,10 +46,10 @@ class MovieFields extends StatelessWidget {
   }
 
   Widget _movieFields(MovieDetails movie, context) {
-    final localization = AppLocalizations.of(context)!;
+    final localization = AppLocalizations.of(context);
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
@@ -63,13 +62,13 @@ class MovieFields extends StatelessWidget {
           movieData(localization.overview, text.validate(movie.overview)),
           movieData(
             localization.genres,
-            movie.genres.length > 0
+            movie.genres.isNotEmpty
                 ? movie.genres.map((item) => item!.name).join(', ')
                 : localization.notFount,
           ),
           movieData(
             localization.comps,
-            movie.companies.length > 0
+            movie.companies.isNotEmpty
                 ? movie.companies.map((item) => item!.name).join(', ')
                 : localization.notFount,
           ),
@@ -96,7 +95,6 @@ class MovieFields extends StatelessWidget {
         }
 
         return text.showMessage(
-          // TODO translate
           'Error while fetch movie information. Sorry...',
           true,
         );
