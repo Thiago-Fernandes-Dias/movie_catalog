@@ -32,15 +32,18 @@ class MovieLists extends StatelessWidget {
             child: Row(
               children: [
                 const SizedBox(width: 20),
-                CachedNetworkImage(
-                  fit: BoxFit.fitHeight,
-                  imageUrl: '${tmdb.baseImagesUrl}/${movies[index]!.posterPath}',
-                  errorWidget: (_, __, ___) {
-                    return Image.asset(
-                      'assets/jpg/noposter.jpg',
-                      fit: BoxFit.fitHeight,
-                    );
-                  },
+                Hero(
+                  tag: '${tmdb.baseImagesUrl}/${movies[index]!.posterPath}',
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fitHeight,
+                    imageUrl: '${tmdb.baseImagesUrl}/${movies[index]!.posterPath}',
+                    errorWidget: (_, __, ___) {
+                      return Image.asset(
+                        'assets/jpg/noposter.jpg',
+                        fit: BoxFit.fitHeight,
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

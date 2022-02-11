@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movie_list/src/models/movie_info.dart';
@@ -42,9 +43,18 @@ Route showMovieInfo(MovieInfo movie) {
                   Container(
                     padding: const EdgeInsets.only(bottom: 20),
                     height: MediaQuery.of(context).size.height * .6,
-                    child: net.fetchImage(
-                      url: '${tmdb.baseImagesUrl}/${movie.posterPath}',
-                      assetOption: 'assets/jpg/noposter.jpg',
+                    child: Hero(
+                      tag: '${tmdb.baseImagesUrl}/${movie.posterPath}',
+                      child: CachedNetworkImage(
+                        imageUrl: '${tmdb.baseImagesUrl}/${movie.posterPath}',
+                        fit: BoxFit.contain,
+                        errorWidget: (_, __, ___) {
+                          return Image.asset(
+                            'assets/jpg/noposter.jpg',
+                            fit: BoxFit.fitHeight,
+                          );
+                        },
+                      ),
                     ),
                   ),
                   MovieFields(movieId: movie.id),
