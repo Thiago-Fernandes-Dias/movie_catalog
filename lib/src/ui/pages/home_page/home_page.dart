@@ -3,7 +3,7 @@ import 'package:movie_list/src/controllers/search_controller.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/search_box.dart';
-import 'movie_grids.dart';
+import 'movie_lists.dart';
 import 'search_result.dart';
 
 class Home extends StatefulWidget {
@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.only(top: 10),
                 child: searchController.currentTerm != ''
                     ? const SearchResult()
-                    : const MovieGrids(),
+                    : const MovieLists(),
               ),
             ],
           ),

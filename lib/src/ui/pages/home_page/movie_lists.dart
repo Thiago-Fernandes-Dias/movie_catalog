@@ -1,39 +1,52 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/src/models/movie_info.dart';
 import 'package:movie_list/src/models/movie_list.dart';
 import 'package:movie_list/src/services/movies_service.dart';
 import 'package:movie_list/src/shared/network_loading.dart' as net;
 import 'package:movie_list/src/shared/text_format.dart' as text;
-import 'package:movie_list/src/shared/tmdb.dart' as tmdb;
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:movie_list/src/ui/pages/movie_details_page/movie_details_page.dart';
+import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
 import 'package:provider/provider.dart';
 
-class MovieGrids extends StatelessWidget {
-  const MovieGrids({
+class MovieLists extends StatelessWidget {
+  const MovieLists({
     Key? key,
   }) : super(key: key);
 
-  Widget _builGrid(List<MovieInfo?> movies, BuildContext ctx) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: MediaQuery.of(ctx).size.width >= 650 ? 5 : 2,
-        mainAxisSpacing: 20,
+  Widget _buildGrid(List<MovieInfo?> movies, BuildContext ctx) {
+    return SizedBox(
+      height: 160,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        itemCount: movies.length,
+        padding: const EdgeInsets.only(right: 10),
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                  showMovieInfo(movies[index]!));
+            },
+            child: Row(
+              children: [
+                const SizedBox(width: 20),
+                CachedNetworkImage(
+                  fit: BoxFit.fitHeight,
+                  imageUrl: '${tmdb.baseImagesUrl}/${movies[index]!.posterPath}',
+                  errorWidget: (_, __, ___) {
+                    return Image.asset(
+                      'assets/jpg/noposter.jpg',
+                      fit: BoxFit.fitHeight,
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        },
       ),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () => Navigator.of(context).push(
-            showMovieInfo(movies[index]!),
-          ),
-          child: net.fetchImage(
-            '${tmdb.baseImagesUrl}/${movies[index]?.posterPath}',
-            'assets/jpg/noposter.jpg',
-          ),
-        );
-      },
     );
   }
 
@@ -48,14 +61,14 @@ class MovieGrids extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return net.loadingField();
         } else if (snapshot.hasData && snapshot.data!.results.isNotEmpty) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            child: Column(
-              children: [
-                text.fieldTitle(gridTitle),
-                _builGrid(snapshot.data!.results, context),
-              ],
-            ),
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 20),
+                child: text.fieldTitle(gridTitle),
+              ),
+              _buildGrid(snapshot.data!.results, context),
+            ],
           );
         }
 
