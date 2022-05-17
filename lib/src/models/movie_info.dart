@@ -1,3 +1,5 @@
+part of 'models.dart';
+
 class MovieInfo {
   final int id;
   String? releaseDate;

@@ -1,24 +1,4 @@
-import 'dart:convert';
-
-class Cast {
-  final String name;
-  final String character;
-  String? profilePath;
-
-  Cast({
-    required this.name,
-    required this.character,
-    this.profilePath,
-  });
-
-  factory Cast.fromJson(Map<String, dynamic> json) {
-    return Cast(
-      name: json['name'],
-      character: json['character'],
-      profilePath: json['profile_path'],
-    );
-  }
-}
+part of 'models.dart';
 
 class Credits {
   final int id;

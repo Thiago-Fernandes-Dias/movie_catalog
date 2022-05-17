@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_list/src/controllers/search_controller.dart';
-import 'package:movie_list/src/models/movie_info.dart';
-import 'package:movie_list/src/models/movie_list.dart';
+import 'package:movie_list/src/models/models.dart';
 import 'package:movie_list/src/services/movies_service.dart';
 import 'package:movie_list/src/shared/network_loading.dart' as net;
 import 'package:movie_list/src/shared/text_format.dart' as text;

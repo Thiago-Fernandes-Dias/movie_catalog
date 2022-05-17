@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movie_list/src/models/movie_info.dart';
-import 'package:movie_list/src/shared/network_loading.dart' as net;
+import 'package:movie_list/src/models/models.dart';
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
 

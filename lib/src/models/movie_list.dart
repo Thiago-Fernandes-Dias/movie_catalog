@@ -1,10 +1,8 @@
-import 'dart:convert';
-
-import 'movie_info.dart';
+part of 'models.dart';
 
 class MovieList {
   final int page;
-  final List<MovieInfo?> results;
+  final List<MovieInfo> results;
   final int totalPages;
   final int totalResults;
 

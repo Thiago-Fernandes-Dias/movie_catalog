@@ -1,29 +1,4 @@
-import 'dart:convert';
-
-class Genres {
-  final int id;
-  final String name;
-
-  Genres({required this.id, required this.name});
-
-  factory Genres.fromJson(Map<String, dynamic> json) {
-    return Genres(id: json['id'], name: json['name']);
-  }
-}
-
-class Companies {
-  final String name;
-  final String originCountry;
-
-  Companies({required this.name, required this.originCountry});
-
-  factory Companies.fromJson(Map<String, dynamic> json) {
-    return Companies(
-      name: json['name'],
-      originCountry: json['origin_country'],
-    );
-  }
-}
+part of 'models.dart';
 
 class MovieDetails {
   final List<Genres?> genres;

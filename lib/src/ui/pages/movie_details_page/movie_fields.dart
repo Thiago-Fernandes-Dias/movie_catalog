@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movie_list/src/models/models.dart';
+import 'package:provider/provider.dart';
 
 import 'package:movie_list/src/shared/text_format.dart' as text;
 import 'package:movie_list/src/shared/network_loading.dart' as net;
-
-import 'package:movie_list/src/models/movies_details.dart';
-
 import 'package:movie_list/src/services/movies_service.dart';
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
 class MovieFields extends StatelessWidget {
   final int movieId;

@@ -1,9 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:movie_list/src/models/credits.dart';
-import 'package:movie_list/src/models/movies_details.dart';
-import 'package:movie_list/src/models/movie_list.dart';
+import 'package:movie_list/src/models/models.dart';
 
 import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
 
@@ -23,8 +20,8 @@ class MoviesService {
       var parsed = await compute(parseMovieList, response.body);
 
       parsed.results.sort((m1, m2) {
-        int d1 = DateTime.parse('${m1!.releaseDate}').year;
-        int d2 = DateTime.parse('${m2!.releaseDate}').year;
+        int d1 = DateTime.parse('${m1.releaseDate}').year;
+        int d2 = DateTime.parse('${m2.releaseDate}').year;
         return d1 != d2 ? d2.compareTo(d1) : m1.title.compareTo(m2.title);
       });
 

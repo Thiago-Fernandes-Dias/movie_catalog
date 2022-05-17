@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/src/models/credits.dart';
+import 'package:movie_list/src/models/models.dart';
 import 'package:movie_list/src/services/movies_service.dart';
 import 'package:movie_list/src/shared/network_loading.dart' as net;
 import 'package:movie_list/src/shared/text_format.dart' as text;
