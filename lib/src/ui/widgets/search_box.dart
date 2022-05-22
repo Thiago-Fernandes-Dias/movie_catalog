@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/src/controllers/search_controller.dart';
+import 'package:movie_list/src/ui/controllers/search_controller.dart';
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 

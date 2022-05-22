@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/src/services/movies_service.dart';
+import 'package:movie_list/src/domain/services/movies_service.dart';
+import 'package:movie_list/src/ui/controllers/search_controller.dart';
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
-import 'package:movie_list/src/ui/pages/home_page/home_page.dart';
 import 'package:movie_list/src/ui/routes/routes.dart';
 import 'package:movie_list/src/ui/theming/transitions/transitions.dart';
 import 'package:provider/provider.dart';
-
-import '../controllers/search_controller.dart';
 
 class AppRoot extends StatelessWidget {
   const AppRoot({Key? key}) : super(key: key);

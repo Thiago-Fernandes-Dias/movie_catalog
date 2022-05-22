@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:movie_list/src/models/models.dart';
+import 'package:movie_list/src/domain/entities/entities.dart';
 
 import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
 

@@ -1,4 +1,4 @@
-import 'package:movie_list/src/models/models.dart';
+import 'package:movie_list/src/domain/entities/entities.dart';
 
 part 'cast_serializer.dart';
 part 'companies_serializer.dart';

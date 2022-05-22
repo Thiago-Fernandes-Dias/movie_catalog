@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/src/models/models.dart';
-import 'package:movie_list/src/services/movies_service.dart';
-import 'package:movie_list/src/shared/network_loading.dart' as net;
-import 'package:movie_list/src/shared/text_format.dart' as text;
+import 'package:movie_list/src/domain/entities/entities.dart';
+import 'package:movie_list/src/domain/services/movies_service.dart';
+import 'package:movie_list/src/ui/widgets/shared/network_loading.dart' as net;
+import 'package:movie_list/src/ui/widgets/shared/text_format.dart' as text;
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
 import 'package:provider/provider.dart';

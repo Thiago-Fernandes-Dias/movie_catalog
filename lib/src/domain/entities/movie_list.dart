@@ -1,4 +1,4 @@
-part of 'models.dart';
+part of 'entities.dart';
 
 class MovieList {
   final int page;

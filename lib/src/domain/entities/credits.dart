@@ -1,4 +1,4 @@
-part of 'models.dart';
+part of 'entities.dart';
 
 class Credits {
   final int id;
