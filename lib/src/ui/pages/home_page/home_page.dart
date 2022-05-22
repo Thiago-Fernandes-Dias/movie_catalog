@@ -6,24 +6,21 @@ import '../../widgets/search_box.dart';
 import 'movie_lists.dart';
 import 'search_result.dart';
 
-class Home extends StatefulWidget {
-  final String title;
-
-  const Home({Key? key, required this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeState extends State<Home> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final SearchController searchController =
-        Provider.of<SearchController>(context);
+    var searchController = Provider.of<SearchController>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Movies Catalog'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
