@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/src/app.dart';
+import 'package:movie_list/src/ui/app_root.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const AppRoot());

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:movie_list/src/services/movies_service.dart';
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:movie_list/src/ui/pages/home_page/home_page.dart';
+import 'package:movie_list/src/ui/theming/transitions/transitions.dart';
 import 'package:provider/provider.dart';
 
-import 'controllers/search_controller.dart';
+import '../controllers/search_controller.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class AppRoot extends StatelessWidget {
+  const AppRoot({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,11 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
+          pageTransitionsTheme: const PageTransitionsTheme(
+            builders: {
+              TargetPlatform.android: FadeInTransition(),
+            },
+          ),
           primarySwatch: Colors.pink,
           scaffoldBackgroundColor: Colors.grey.shade900,
           textTheme: Theme.of(context).textTheme.apply(
