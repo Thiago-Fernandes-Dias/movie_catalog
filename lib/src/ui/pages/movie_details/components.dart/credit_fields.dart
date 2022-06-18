@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/domain/services/movies_service.dart';
 import 'package:movie_list/src/ui/widgets/shared/network_loading.dart' as net;
 import 'package:movie_list/src/ui/widgets/shared/text_format.dart' as text;
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
@@ -94,22 +93,23 @@ class CreditsFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MoviesService moviesService = Provider.of<MoviesService>(context);
+    // final MoviesService moviesService = Provider.of<MoviesService>(context);
 
-    return FutureBuilder<Credits>(
-      future: moviesService.fetchCreditsByMovieId(movieId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return net.loadingField();
-        } else if (snapshot.hasData && snapshot.data!.cast.isNotEmpty) {
-          return _buildCastField(context, snapshot.data!.cast);
-        }
+    // return FutureBuilder<Credits>(
+    //   future: moviesService.fetchCreditsByMovieId(movieId),
+    //   builder: (context, snapshot) {
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return net.loadingField();
+    //     } else if (snapshot.hasData && snapshot.data!.cast.isNotEmpty) {
+    //       return _buildCastField(context, snapshot.data!.cast);
+    //     }
 
-        return text.showMessage(
-          AppLocalizations.of(context).notFount,
-          false,
-        );
-      },
-    );
+    //     return text.showMessage(
+    //       AppLocalizations.of(context).notFount,
+    //       false,
+    //     );
+    //   },
+    // );
+    return Container();
   }
 }

@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movie_list/src/domain/entities/entities.dart';
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
+import 'package:movie_list/src/ui/pages/movie_details/components.dart/credit_fields.dart';
+import 'package:movie_list/src/ui/pages/movie_details/components.dart/movie_fields.dart';
 import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
-
-import 'credit_fields.dart';
-import 'movie_fields.dart';
 
 Route showMovieInfo(MovieInfo movie) {
   return PageRouteBuilder(

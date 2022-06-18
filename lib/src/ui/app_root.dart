@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/src/domain/services/movies_service.dart';
-import 'package:movie_list/src/ui/controllers/search_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_list/src/data/repositories/repositories.dart';
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
+import 'package:movie_list/src/ui/pages/home/bloc/home_bloc.dart';
 import 'package:movie_list/src/ui/routes/routes.dart';
 import 'package:movie_list/src/ui/theming/transitions/transitions.dart';
-import 'package:provider/provider.dart';
 
 class AppRoot extends StatelessWidget {
   const AppRoot({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        Provider<MoviesService>.value(
-          value: MoviesService(),
-        ),
-        ChangeNotifierProvider<SearchController>.value(
-          value: SearchController(),
+        BlocProvider(
+          create: (_) {
+            return HomeBloc(
+              moviesRepository: MoviesRepositoryImpl(),
+              searchRepository: SearchRepositoryImpl(),
+            );
+          },
         ),
       ],
       child: MaterialApp.router(
