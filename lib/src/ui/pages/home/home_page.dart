@@ -1,11 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_list/src/ui/pages/home/bloc/home_bloc.dart';
-import 'package:movie_list/src/ui/pages/home/components/movie_lists.dart';
-import 'package:movie_list/src/ui/pages/home/components/result_reader.dart';
-import 'package:movie_list/src/ui/pages/home/components/search_result.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movie_list/src/domain/entities/entities.dart';
+import 'package:movie_list/src/ui/blocs/home/home_bloc.dart';
+import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:movie_list/src/ui/widgets/page_nav.dart';
 import 'package:movie_list/src/ui/widgets/search_box.dart';
+import 'package:movie_list/src/ui/widgets/shared/text_format.dart';
+import 'package:movie_list/src/ui/widgets/tmdb.dart';
+
+part 'movie_lists.dart';
+part 'result_reader.dart';
+part 'search_result.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,23 +48,23 @@ class _HomePageState extends State<HomePage> {
                 if (state is LoadingMovieLists) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is FechedMovieLists) {
-                  return MovieLists(
-                    mostPopularMovies: state.mostPopular.results,
-                    topRatedMovies: state.topRated.results,
+                  return _MovieLists(
+                    mostPopularMovies: state.mostPopular!.results,
+                    topRatedMovies: state.topRated!.results,
                   );
                 } else if (state is LoadingSearchResult) {
                   return Column(
                     children: [
-                      ResultHeader(searchTerm: state.searchTerm),
+                      _ResultHeader(searchTerm: state.searchTerm!),
                       const Expanded(child: Center(child: CircularProgressIndicator()))
                     ],
                   );
                 } else if (state is FetchedSearchResult) {
                   return ListView(
                     children: [
-                      ResultHeader(searchTerm: state.searchTerm),
-                      SearchResult(movieList: state.searchResult.results),
-                      PageNav(limit: state.searchResult.totalPages),
+                      _ResultHeader(searchTerm: state.searchTerm!),
+                      _SearchResult(movieList: state.searchResult!.results),
+                      PageNav(limit: state.searchResult!.totalPages),
                     ],
                   );
                 }

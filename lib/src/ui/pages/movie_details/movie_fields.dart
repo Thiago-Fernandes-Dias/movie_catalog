@@ -5,12 +5,7 @@ import 'package:movie_list/src/ui/widgets/shared/text_format.dart' as text;
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 
 class MovieFields extends StatelessWidget {
-  final int movieId;
-
-  const MovieFields({
-    Key? key,
-    required this.movieId,
-  }) : super(key: key);
+  const MovieFields({super.key});
 
   Widget movieData(String fieldName, String info) {
     const movieField = TextStyle(
@@ -67,7 +62,7 @@ class MovieFields extends StatelessWidget {
                 ? movie.companies.map((item) => item!.name).join(', ')
                 : localization.notFount,
           ),
-          movieData(localization.release, movie.releaseDate),
+          movieData(localization.release, movie.releaseDate ?? ''),
           movieData(localization.votes, text.validate('${movie.voteCount}')),
           movieData(localization.rate, text.validate('${movie.voteAverage}')),
           // movieData(localization.status, movie.status),

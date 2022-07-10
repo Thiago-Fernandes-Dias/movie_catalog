@@ -28,7 +28,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var mostPopularMovies = await _moviesRepository.getPopularMovies(1);
       emitter(FechedMovieLists(topRated: topRatedMovies, mostPopular: mostPopularMovies));
     } on Exception catch (e) {
-      emitter(HomeErrorState(e));
+      emitter(HomeErrorState(error: e));
     }
   }
 
@@ -37,7 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var searchResult = await _searchRepository.seachMoviesByTitle(event.searchTerm);
       emitter(FetchedSearchResult(searchResult: searchResult, searchTerm: event.searchTerm));
     } on Exception catch (e) {
-      emitter(HomeErrorState(e));
+      emitter(HomeErrorState(error: e));
     }
   }
 }

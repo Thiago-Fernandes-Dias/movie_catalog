@@ -1,14 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/ui/pages/movie_details/movie_details_page.dart';
-import 'package:movie_list/src/ui/widgets/shared/network_loading.dart' as net;
-import 'package:movie_list/src/ui/widgets/shared/text_format.dart' as text;
-import 'package:movie_list/src/ui/l10n/app_localizations.dart';
-import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
+part of 'home_page.dart';
 
-class MovieLists extends StatelessWidget {
-  const MovieLists({
+class _MovieLists extends StatelessWidget {
+  const _MovieLists({
     Key? key,
     required this.topRatedMovies,
     required this.mostPopularMovies,
@@ -28,18 +21,15 @@ class MovieLists extends StatelessWidget {
         padding: const EdgeInsets.only(right: 10),
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(showMovieInfo(movies[index]));
-            },
+            onTap: () => context.go('/movie/${movies[index].id}'),
             child: Row(
               children: [
                 const SizedBox(width: 20),
                 Hero(
-                  tag: '${tmdb.baseImagesUrl}/${movies[index].posterPath}',
+                  tag: '$baseImagesUrl${movies[index].posterPath}',
                   child: CachedNetworkImage(
                     fit: BoxFit.fitHeight,
-                    imageUrl:
-                        '${tmdb.baseImagesUrl}/${movies[index].posterPath}',
+                    imageUrl: '$baseImagesUrl${movies[index].posterPath}',
                     errorWidget: (_, __, ___) {
                       return Image.asset(
                         'assets/jpg/noposter.jpg',
@@ -64,7 +54,7 @@ class MovieLists extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 20.0, top: 20),
-          child: text.fieldTitle(gridTitle),
+          child: fieldTitle(gridTitle),
         ),
         _buildGrid(movieList),
       ],

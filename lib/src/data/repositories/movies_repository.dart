@@ -33,7 +33,7 @@ class MoviesRepositoryImpl implements MoviesRepository {
   
   @override
   Future<Credits> getMovieCredits(String movieId) async {
-    var response = await _httpClient.get("${env.tmdbApiUrl}/movie/credits");
+    var response = await _httpClient.get("${env.tmdbApiUrl}/movie/$movieId/credits");
     if (response.statusCode != 200) throw TMDBError.fromJsonResponse(response.data);
     return creditsSerializer.from(response.data);
   }

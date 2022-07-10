@@ -12,7 +12,7 @@ class MovieDetails {
   final String? posterPath;
   final List<Companies> companies;
   final List<Country> countries;
-  final String releaseDate;
+  final String? releaseDate;
   final int revenue;
   final int? runtime;
   final MovieStatus status;
@@ -32,7 +32,7 @@ class MovieDetails {
     this.posterPath,
     required this.companies,
     required this.countries,
-    required this.releaseDate,
+    this.releaseDate,
     required this.revenue,
     this.runtime,
     required this.status,

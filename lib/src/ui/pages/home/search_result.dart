@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/ui/pages/movie_details/movie_details_page.dart';
+part of 'home_page.dart';
 
-class SearchResult extends StatefulWidget {
-  const SearchResult({
+class _SearchResult extends StatefulWidget {
+  const _SearchResult({
     Key? key,
     required this.movieList,
   }) : super(key: key);
@@ -11,10 +9,10 @@ class SearchResult extends StatefulWidget {
   final List<MovieInfo> movieList;
 
   @override
-  State<SearchResult> createState() => _SearchResultState();
+  State<_SearchResult> createState() => _SearchResultState();
 }
 
-class _SearchResultState extends State<SearchResult> {
+class _SearchResultState extends State<_SearchResult> {
   Widget _buildResultsItem(MovieInfo movie) {
     return ListTile(
       title: Text(movie.title),
@@ -27,7 +25,7 @@ class _SearchResultState extends State<SearchResult> {
         size: 25,
         color: Colors.grey.shade400,
       ),
-      onTap: () => Navigator.of(context).push(showMovieInfo(movie)),
+      onTap: () => context.go('/movies/${movie.id}'),
     );
   }
 

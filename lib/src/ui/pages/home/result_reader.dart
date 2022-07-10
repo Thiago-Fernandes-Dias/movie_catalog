@@ -1,19 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_list/src/ui/l10n/app_localizations.dart';
-import 'package:movie_list/src/ui/pages/home/bloc/home_bloc.dart';
-import 'package:movie_list/src/ui/widgets/shared/text_format.dart' as text;
+part of 'home_page.dart';
 
-class ResultHeader extends StatefulWidget {
-  const ResultHeader({ Key? key, required this.searchTerm}) : super(key: key);
+class _ResultHeader extends StatefulWidget {
+  const _ResultHeader({ Key? key, required this.searchTerm}) : super(key: key);
 
   final String searchTerm;
 
   @override
-  State<ResultHeader> createState() => _ResultHeaderState();
+  State<_ResultHeader> createState() => _ResultHeaderState();
 }
 
-class _ResultHeaderState extends State<ResultHeader> {
+class _ResultHeaderState extends State<_ResultHeader> {
   late final HomeBloc _homeBloc;
 
   @override
@@ -29,7 +25,7 @@ class _ResultHeaderState extends State<ResultHeader> {
       child: Row(
         children: [
           Expanded(
-            child: text.fieldTitle(
+            child: fieldTitle(
               AppLocalizations.of(context).resultsHeader + widget.searchTerm,
             ),
           ),

@@ -39,7 +39,7 @@ class MovieDetailsSerializer implements Serializer<MovieDetails, Map<String, dyn
     final posterPath = json[MovieDetailsKeys.posterPath] as String?;
     final companies = rawCompanies.map(companiesSerializer.from).toList();
     final countries = rawCountries.map(countrySerializer.from).toList();
-    final releaseDate = json[MovieDetailsKeys.releaseDate] as String;
+    final releaseDate = json[MovieDetailsKeys.releaseDate] as String?;
     final revenue = json[MovieDetailsKeys.revenue] as int;
     final runtime = json[MovieDetailsKeys.runtime] as int?;
     final status = movieStatusFromString(json[MovieDetailsKeys.status] as String);

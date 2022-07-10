@@ -4,15 +4,9 @@ import 'package:movie_list/src/ui/widgets/shared/network_loading.dart' as net;
 import 'package:movie_list/src/ui/widgets/shared/text_format.dart' as text;
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
 import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
-import 'package:provider/provider.dart';
 
 class CreditsFields extends StatelessWidget {
-  final int movieId;
-
-  const CreditsFields({
-    Key? key,
-    required this.movieId,
-  }) : super(key: key);
+  const CreditsFields({super.key});
 
   Row _buildCastItem(BuildContext context, Cast cast) {
     var itemHeight = MediaQuery.of(context).size.height * .2;

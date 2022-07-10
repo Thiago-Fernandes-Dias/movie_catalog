@@ -5,5 +5,6 @@ abstract class BaseError implements Exception {
   
   const BaseError({required this.message});
 
+  @override
   String toString() => "Error: $message";
 }
