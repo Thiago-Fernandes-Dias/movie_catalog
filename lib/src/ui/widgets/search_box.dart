@@ -32,7 +32,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-      color: const Color(0xff0c0c0c),
+      color: const Color.fromARGB(255, 245, 245, 245),
       child: Focus(
         onFocusChange: (hasFocus) {
           if (!hasFocus) widget.onSearch(_controller.text);

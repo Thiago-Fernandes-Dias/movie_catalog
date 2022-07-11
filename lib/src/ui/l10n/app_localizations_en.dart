@@ -41,7 +41,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get votes => 'Vote Count';
 
   @override
-  String get rate => 'Rating,';
+  String get rate => 'Rating';
 
   @override
   String get status => 'Status';

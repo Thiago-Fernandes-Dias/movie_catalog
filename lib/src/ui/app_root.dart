@@ -39,15 +39,6 @@ class AppRoot extends StatelessWidget {
             },
           ),
           primarySwatch: Colors.pink,
-          scaffoldBackgroundColor: Colors.grey.shade900,
-          textTheme: Theme.of(context).textTheme.apply(
-                bodyColor: Colors.grey.shade200,
-                displayColor: Colors.grey.shade300,
-              ),
-          iconTheme: IconThemeData(
-            color: Colors.grey.shade400,
-            opacity: 1.0,
-          ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

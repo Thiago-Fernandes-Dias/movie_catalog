@@ -1,14 +1,47 @@
-import 'package:flutter/material.dart';
-import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/ui/widgets/shared/network_loading.dart' as net;
-import 'package:movie_list/src/ui/widgets/shared/text_format.dart' as text;
-import 'package:movie_list/src/ui/l10n/app_localizations.dart';
-import 'package:movie_list/src/ui/widgets/tmdb.dart' as tmdb;
+part of 'movie_details_page.dart';
 
 class CreditsFields extends StatelessWidget {
   const CreditsFields({super.key});
 
-  Row _buildCastItem(BuildContext context, Cast cast) {
+  @override
+  Widget build(BuildContext context) {
+    var casts = context.read<MovieDetailsBloc>().state.movieCredits!.cast;
+
+    return Container(
+      padding: const EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 40),
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        children: [
+          fieldTitle(AppLocalizations.of(context).cast),
+          Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: MediaQuery.of(context).size.width >= 650 
+                    ? 3 
+                    : 1,
+                mainAxisSpacing: 20,
+                mainAxisExtent: 150,
+              ),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: casts.length,
+              itemBuilder: (context, i) => _CastTile(cast: casts[i]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CastTile extends StatelessWidget {
+  const _CastTile({required this.cast});
+
+  final Cast cast;
+
+  @override
+  Widget build(BuildContext context) {
     var itemHeight = MediaQuery.of(context).size.height * .2;
     const itemPadding = EdgeInsets.symmetric(
       horizontal: 6,
@@ -27,8 +60,8 @@ class CreditsFields extends StatelessWidget {
           padding: itemPadding,
           height: itemHeight,
           width: 95,
-          child: net.fetchImage(
-            url: '${tmdb.baseImagesUrl}/${cast.profilePath}',
+          child: fetchImage(
+            url: '$baseImagesUrl/${cast.profilePath}',
             assetOption: 'assets/jpg/noprofile.jpg',
           ),
         ),
@@ -56,54 +89,5 @@ class CreditsFields extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  Widget _buildCastField(BuildContext context, List<Cast?> cast) {
-    return Container(
-      padding: const EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 40),
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          text.fieldTitle(AppLocalizations.of(context).cast),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount:
-                    MediaQuery.of(context).size.width >= 650 ? 3 : 1,
-                mainAxisSpacing: 20,
-                mainAxisExtent: 150,
-              ),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: cast.length < 6 ? cast.length : 6,
-              itemBuilder: (context, i) => _buildCastItem(context, cast[i]!),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // final MoviesService moviesService = Provider.of<MoviesService>(context);
-
-    // return FutureBuilder<Credits>(
-    //   future: moviesService.fetchCreditsByMovieId(movieId),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.waiting) {
-    //       return net.loadingField();
-    //     } else if (snapshot.hasData && snapshot.data!.cast.isNotEmpty) {
-    //       return _buildCastField(context, snapshot.data!.cast);
-    //     }
-
-    //     return text.showMessage(
-    //       AppLocalizations.of(context).notFount,
-    //       false,
-    //     );
-    //   },
-    // );
-    return Container();
   }
 }

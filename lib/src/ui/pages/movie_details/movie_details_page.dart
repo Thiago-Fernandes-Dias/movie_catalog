@@ -5,14 +5,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_list/src/core/env.dart';
 import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/domain/enums/movie_status.dart';
 import 'package:movie_list/src/ui/blocs/movie_details/movie_details_bloc.dart';
 import 'package:movie_list/src/ui/l10n/app_localizations.dart';
-import 'package:movie_list/src/ui/pages/movie_details/credit_fields.dart';
+import 'package:movie_list/src/ui/widgets/shared/network_loading.dart';
 import 'package:movie_list/src/ui/widgets/shared/text_format.dart';
+import 'package:movie_list/src/ui/widgets/tmdb.dart';
 import 'package:nil/nil.dart';
 
 part 'movie_fields.dart';
+part 'credit_fields.dart';
 
 class MovieDetailsPage extends StatelessWidget {
   const MovieDetailsPage(this.movieId, {super.key});

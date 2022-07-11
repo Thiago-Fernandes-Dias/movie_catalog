@@ -33,7 +33,7 @@ class _MovieFields extends StatelessWidget {
           _MovieData(fieldName: localization.release, info: movie.releaseDate ?? ''),
           _MovieData(fieldName: localization.votes, info: validate('${movie.voteCount}')),
           _MovieData(fieldName: localization.rate, info: validate('${movie.voteAverage}')),
-          _MovieData(fieldName:localization.status, info: movie.status.toString()),
+          _MovieData(fieldName: localization.status, info: movie.status.toString()),
         ],
       ),
     );
