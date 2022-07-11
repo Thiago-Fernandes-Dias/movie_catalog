@@ -42,7 +42,7 @@ class MovieDetailsSerializer implements Serializer<MovieDetails, Map<String, dyn
     final releaseDate = json[MovieDetailsKeys.releaseDate] as String?;
     final revenue = json[MovieDetailsKeys.revenue] as int;
     final runtime = json[MovieDetailsKeys.runtime] as int?;
-    final status = movieStatusFromString(json[MovieDetailsKeys.status] as String);
+    final status = MovieStatus.fromString(json[MovieDetailsKeys.status] as String);
     final title = json[MovieDetailsKeys.title] as String;
     final voteAverage = json[MovieDetailsKeys.voteAverage] as num;
     final voteCount = json[MovieDetailsKeys.voteCount] as int;
