@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/ui/blocs/home/home_bloc.dart';
-import 'package:movie_list/src/ui/l10n/app_localizations.dart';
-import 'package:movie_list/src/ui/widgets/page_nav.dart';
-import 'package:movie_list/src/ui/widgets/search_box.dart';
-import 'package:movie_list/src/ui/widgets/shared/text_format.dart';
-import 'package:movie_list/src/ui/widgets/tmdb.dart';
+import 'package:movie_list/src/application/blocs/home/home_bloc.dart';
+import 'package:movie_list/src/application/l10n/app_localizations.dart';
+import 'package:movie_list/src/application/widgets/page_nav.dart';
+import 'package:movie_list/src/application/widgets/search_box.dart';
+import 'package:movie_list/src/application/widgets/shared/text_format.dart';
+import 'package:movie_list/src/application/widgets/tmdb.dart';
 
 part 'movie_lists.dart';
 part 'result_reader.dart';

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_list/src/data/repositories/repositories.dart';
-import 'package:movie_list/src/ui/blocs/home/home_bloc.dart';
-import 'package:movie_list/src/ui/blocs/movie_details/movie_details_bloc.dart';
-import 'package:movie_list/src/ui/l10n/app_localizations.dart';
-import 'package:movie_list/src/ui/routes/routes.dart';
-import 'package:movie_list/src/ui/theming/transitions/transitions.dart';
+import 'package:movie_list/src/application/blocs/home/home_bloc.dart';
+import 'package:movie_list/src/application/blocs/movie_details/movie_details_bloc.dart';
+import 'package:movie_list/src/application/l10n/app_localizations.dart';
+import 'package:movie_list/src/application/routes/routes.dart';
+import 'package:movie_list/src/application/theming/transitions/transitions.dart';
 
 class AppRoot extends StatelessWidget {
   const AppRoot({Key? key}) : super(key: key);
