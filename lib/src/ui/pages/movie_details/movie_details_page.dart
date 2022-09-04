@@ -94,7 +94,12 @@ class MovieDetailsPage extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text(localizations.footer),
+              child: Text(
+                localizations.footer,
+                style: TextStyle(
+                  color: Colors.grey.shade200,
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
