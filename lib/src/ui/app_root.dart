@@ -43,6 +43,7 @@ class AppRoot extends StatelessWidget {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         routeInformationParser: goRouter.routeInformationParser,
+        routeInformationProvider: goRouter.routeInformationProvider,
         routerDelegate: goRouter.routerDelegate,
       ),
     );

@@ -54,9 +54,11 @@ class _MovieData extends StatelessWidget {
     const movieField = TextStyle(
       fontWeight: FontWeight.w500,
       fontSize: 16,
+      color: Colors.black
     );
     const movieInfo = TextStyle(
       fontWeight: FontWeight.w300,
+      color: Colors.black
     );
 
     return Container(
