@@ -2,13 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_list/src/application/blocs/home_movie_list_cubit/home_movie_list_cubit.dart';
+import 'package:movie_list/src/application/blocs/search_for_movies_cubit/search_for_movies_cubit.dart';
 import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/application/blocs/home/home_bloc.dart';
 import 'package:movie_list/src/application/l10n/app_localizations.dart';
 import 'package:movie_list/src/application/widgets/page_nav.dart';
 import 'package:movie_list/src/application/widgets/search_box.dart';
 import 'package:movie_list/src/application/widgets/shared/text_format.dart';
 import 'package:movie_list/src/application/widgets/tmdb.dart';
+import 'package:nil/nil.dart';
 
 part 'movie_lists.dart';
 part 'result_reader.dart';
@@ -22,12 +24,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final HomeBloc _homeBloc;
+  late final HomeMovieListCubit _homeMovieListCubit;
+  late final SearchForMoviesCubit _searchForMoviesCubit;
   @override
 
   void initState() {
     super.initState();
-    _homeBloc = context.read<HomeBloc>()..add(GetMovieLists());
+    _homeMovieListCubit = context.read()..getHomeMovieLists();
+    _searchForMoviesCubit = context.read();
   }
 
   @override
@@ -40,36 +44,35 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           SearchBar(
-            onSearch: (text) => _homeBloc.add(SearchMovies(searchTerm: text)),
+            onSearch: (text) {
+              _searchForMoviesCubit.searchMoviesBySearchTerm(text);
+            },
           ),
           Expanded(
-            child: BlocBuilder<HomeBloc, HomeState>(
+            child: BlocBuilder<SearchForMoviesCubit, SearchForMoviesState>(
               builder: (_, state) {
-                if (state is LoadingMovieLists) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is FechedMovieLists) {
-                  return _MovieLists(
-                    mostPopularMovies: state.mostPopular!.results,
-                    topRatedMovies: state.topRated!.results,
-                  );
+                if (state is SearchForMoviesIdleState) {
+                  return const _MovieLists();
                 } else if (state is LoadingSearchResult) {
                   return Column(
-                    children: [
-                      _ResultHeader(searchTerm: state.searchTerm!),
-                      const Expanded(child: Center(child: CircularProgressIndicator()))
+                    children: const [
+                      _ResultHeader(),
+                      Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
                     ],
                   );
-                } else if (state is FetchedSearchResult) {
-                  return ListView(
-                    children: [
-                      _ResultHeader(searchTerm: state.searchTerm!),
-                      _SearchResult(movieList: state.searchResult!.results),
-                      PageNav(limit: state.searchResult!.totalPages),
+                } else if (state is LoadedSearchResult) {
+                  return Column(
+                    children: const [
+                      _ResultHeader(),
+                      Expanded(child: _SearchResult())
                     ],
                   );
                 }
-                var errorState = state as HomeErrorState;
-                return Center(child: Text(errorState.error.toString()));
+                return nil;
               },
             ),
           ),
