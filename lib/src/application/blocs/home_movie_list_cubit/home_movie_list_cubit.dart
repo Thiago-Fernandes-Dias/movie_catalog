@@ -24,7 +24,7 @@ class HomeMovieListCubitImpl extends HomeMovieListCubit {
       emit(LoadedMovieList(topRatedMovies: topRatedMovies, 
                            mostPopularMovies: mostPopularMovies));
     } on Exception catch (e) {
-      emit(HomeMovieListErrorState(e));
+      emit(HomeMovieListErrorState(error: e));
     }
   }
 }

@@ -9,6 +9,7 @@ abstract class SearchForMoviesCubit extends Cubit<SearchForMoviesState> {
   SearchForMoviesCubit() : super(SearchForMoviesIdleState());
 
   Future<void> searchMoviesBySearchTerm(String term); 
+  void cancelSearch();
 }
 
 class SearchForMoviesCubitImpl extends SearchForMoviesCubit {
@@ -23,7 +24,12 @@ class SearchForMoviesCubitImpl extends SearchForMoviesCubit {
       var searchResult = await searchRepository.seachMoviesByTitle(term);
       emit(LoadedSearchResult(searchResult: searchResult, searchTerm: term));
     } on Exception catch (e) {
-      emit(SearchForMoviesErrorState(e));
+      emit(SearchForMoviesErrorState(error: e));
     }
+  }
+
+  @override
+  void cancelSearch() {
+    emit(SearchForMoviesIdleState());
   }
 }
