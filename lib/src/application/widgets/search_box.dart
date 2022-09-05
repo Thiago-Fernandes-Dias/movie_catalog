@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_list/src/ui/l10n/app_localizations.dart';
+import 'package:movie_list/src/application/l10n/app_localizations.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({
