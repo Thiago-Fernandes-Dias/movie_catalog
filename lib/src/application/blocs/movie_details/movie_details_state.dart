@@ -1,4 +1,4 @@
-part of 'movie_details_bloc.dart';
+part of 'movie_details_cubit.dart';
 
 abstract class MovieDetailsState {
   final MovieDetails? movieDetails;

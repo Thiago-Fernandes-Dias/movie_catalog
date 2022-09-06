@@ -3,7 +3,7 @@ part of 'movie_details_page.dart';
 class _MovieFields extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var movie = context.read<MovieDetailsBloc>().state.movieDetails!;
+    var movie = context.read<MovieDetailsCubit>().state.movieDetails!;
     var localization = AppLocalizations.of(context);
 
     return Container(
