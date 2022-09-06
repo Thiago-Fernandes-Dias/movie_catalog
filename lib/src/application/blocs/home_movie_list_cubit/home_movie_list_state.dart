@@ -7,8 +7,8 @@ abstract class HomeMovieListState extends Equatable {
     this.error,
   });
 
-  final MovieList? topRatedMovies;
-  final MovieList? mostPopularMovies;
+  final List<MovieInfo>? topRatedMovies;
+  final List<MovieInfo>? mostPopularMovies;
   final Exception? error;
 
   @override

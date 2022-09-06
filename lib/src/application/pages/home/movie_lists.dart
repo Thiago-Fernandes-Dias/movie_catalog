@@ -14,8 +14,8 @@ class _MovieLists extends StatelessWidget {
         } else if (state is HomeMovieListErrorState) {
           return Center(child: Text(state.error.toString()));
         } else if (state is LoadedMovieList) {
-          final topRatedMovies = state.topRatedMovies!.results;
-          final mostPopularMovies = state.mostPopularMovies!.results;
+          final topRatedMovies = state.topRatedMovies!;
+          final mostPopularMovies = state.mostPopularMovies!;
           return ListView(
             children: [
               Column(
