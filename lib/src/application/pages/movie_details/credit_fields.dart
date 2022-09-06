@@ -5,7 +5,7 @@ class CreditsFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var casts = context.read<MovieDetailsBloc>().state.movieCredits!.cast;
+    var casts = context.read<MovieDetailsCubit>().state.movieCredits!.cast;
 
     return Container(
       padding: const EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 40),

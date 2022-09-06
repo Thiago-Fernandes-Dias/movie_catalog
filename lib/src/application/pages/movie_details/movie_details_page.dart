@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_list/src/core/env.dart';
 import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/application/blocs/movie_details/movie_details_bloc.dart';
+import 'package:movie_list/src/application/blocs/movie_details/movie_details_cubit.dart';
 import 'package:movie_list/src/application/l10n/app_localizations.dart';
 import 'package:movie_list/src/application/widgets/shared/network_loading.dart';
 import 'package:movie_list/src/application/widgets/shared/text_format.dart';
@@ -15,17 +15,33 @@ import 'package:nil/nil.dart';
 part 'movie_fields.dart';
 part 'credit_fields.dart';
 
-class MovieDetailsPage extends StatelessWidget {
+class MovieDetailsPage extends StatefulWidget {
   const MovieDetailsPage(this.movieId, {super.key});
 
   final String movieId;
 
   @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
-    final movieDetailsBloc = context.read<MovieDetailsBloc>()
-        ..add(GetMovieDetails(movieId));
+  State<MovieDetailsPage> createState() => _MovieDetailsPageState();
+}
 
+class _MovieDetailsPageState extends State<MovieDetailsPage> {
+  late final MovieDetailsCubit movieDetailsCubit;
+  late final AppLocalizations localizations;
+
+  @override
+  void initState() {
+    super.initState();
+    movieDetailsCubit = context.read()..fetchMovieDetails(widget.movieId);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    localizations = AppLocalizations.of(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(localizations.movieInfo),
@@ -35,8 +51,8 @@ class MovieDetailsPage extends StatelessWidget {
           onPressed: () => context.go('/'),
         ),
       ),
-      body: BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
-        bloc: movieDetailsBloc,
+      body: BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
+        bloc: movieDetailsCubit,
         builder: (context, state) {
           if (state is LoadingMovieDetails) {
             return const Center(child: CircularProgressIndicator());
