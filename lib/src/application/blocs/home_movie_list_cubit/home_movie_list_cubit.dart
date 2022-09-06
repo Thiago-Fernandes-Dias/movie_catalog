@@ -21,8 +21,8 @@ class HomeMovieListCubitImpl extends HomeMovieListCubit {
     try {
       var topRatedMovies = await moviesRepository.getTopRatedMovies(1);
       var mostPopularMovies = await moviesRepository.getPopularMovies(1);
-      emit(LoadedMovieList(topRatedMovies: topRatedMovies, 
-                           mostPopularMovies: mostPopularMovies));
+      emit(LoadedMovieList(topRatedMovies: topRatedMovies.results, 
+                           mostPopularMovies: mostPopularMovies.results));
     } on Exception catch (e) {
       emit(HomeMovieListErrorState(error: e));
     }
