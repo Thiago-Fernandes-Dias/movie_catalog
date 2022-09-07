@@ -56,8 +56,8 @@ class _MovieListsHorizontalListBuilder extends StatelessWidget {
       height: 160,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        addAutomaticKeepAlives: false,
         shrinkWrap: true,
+        cacheExtent: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         itemCount: movies.length,
         separatorBuilder: (_, __) => const SizedBox(width: 10),        
@@ -68,10 +68,20 @@ class _MovieListsHorizontalListBuilder extends StatelessWidget {
               tag: '$baseImagesUrl${movies[index].posterPath}',
               child: AspectRatio(
                 aspectRatio: .67,
-                child: Image.network(
-                  '$baseImagesUrl${movies[index].posterPath}',
+                child: CachedNetworkImage(
+                  imageUrl: '$baseImagesUrl${movies[index].posterPath}',
                   fit: BoxFit.fitHeight,
-                  errorBuilder: (_, __, ___) {
+                  placeholder: (_, ___) {
+                    return ShimmerLoading(
+                      isLoading: true,                      
+                      child: Container(
+                        alignment: Alignment.center,
+                        color: Colors.black,
+                        child: Text(''),
+                      ),
+                    );
+                  },
+                  errorWidget: (_, __, ___) {
                     return Image.asset(
                       'assets/jpg/noposter.jpg',
                       fit: BoxFit.fitHeight,
@@ -86,3 +96,19 @@ class _MovieListsHorizontalListBuilder extends StatelessWidget {
     );
   }
 }
+
+const _shimmerGradient = LinearGradient(
+  colors: [
+    Color(0xFFEBEBF4),
+    Color(0xFFF4F4F4),
+    Color(0xFFEBEBF4),
+  ],
+  stops: [
+    0.1,
+    0.3,
+    0.4,
+  ],
+  begin: Alignment(-1.0, -0.3),
+  end: Alignment(1.0, 0.3),
+  tileMode: TileMode.clamp,
+);
