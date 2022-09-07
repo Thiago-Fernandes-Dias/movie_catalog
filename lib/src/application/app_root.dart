@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_list/src/application/blocs/blocs_provider.dart';
 import 'package:movie_list/src/application/l10n/app_localizations.dart';
 import 'package:movie_list/src/application/routes/routes.dart';
-import 'package:movie_list/src/application/theming/transitions/transitions.dart';
+import 'package:movie_list/src/application/ui/transitions/transitions.dart';
 
 class AppRoot extends StatelessWidget {
   const AppRoot({Key? key}) : super(key: key);
