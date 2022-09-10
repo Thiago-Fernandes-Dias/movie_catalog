@@ -1,6 +1,6 @@
 part of 'movie_details_cubit.dart';
 
-abstract class MovieDetailsState {
+abstract class MovieDetailsState extends Equatable {
   final MovieDetails? movieDetails;
   final Credits? movieCredits;
   final Exception? error;
@@ -10,6 +10,9 @@ abstract class MovieDetailsState {
     this.movieCredits,
     this.error,
   });
+
+  @override
+  List<Object?> get props => [movieDetails, movieCredits, error];
 }
 
 class LoadingMovieDetails extends MovieDetailsState {}

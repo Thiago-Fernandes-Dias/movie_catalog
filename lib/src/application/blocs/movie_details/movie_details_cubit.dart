@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_list/src/data/repositories/repositories.dart';
 import 'package:movie_list/src/domain/entities/entities.dart';
@@ -17,6 +18,7 @@ class MovieDetailsCubitImpl extends MovieDetailsCubit {
 
   @override
   Future<void> fetchMovieDetails(String movieId) async {
+    emit(LoadingMovieDetails());
     try {
       var movieDetails = await moviesRepository.getMovieDetails(movieId);
       var movieCredits = await moviesRepository.getMovieCredits(movieId);
