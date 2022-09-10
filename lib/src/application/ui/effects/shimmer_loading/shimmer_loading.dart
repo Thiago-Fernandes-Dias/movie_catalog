@@ -82,7 +82,7 @@ class Shimmer extends StatefulWidget {
 
   const Shimmer({
     super.key,
-    required this.linearGradient,
+    this.linearGradient = _defaultShimmerGradient,
     this.child,
   });
 

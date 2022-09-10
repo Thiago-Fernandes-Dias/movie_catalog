@@ -42,7 +42,6 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: Shimmer(
-        linearGradient: _shimmerGradient,
         child: Column(
           children: [
             SearchBar(
