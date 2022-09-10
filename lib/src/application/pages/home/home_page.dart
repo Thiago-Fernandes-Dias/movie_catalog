@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     );
                   } else if (state is LoadedSearchResult) {
-                    return Column(
+                    return ListView(
                       children: const [
                         _ResultHeader(),
                         Expanded(child: _SearchResult())
