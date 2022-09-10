@@ -30,14 +30,14 @@ class _ResultHeaderState extends State<_ResultHeader> {
             children: [
               Expanded(
                 child: fieldTitle(
-                  AppLocalizations.of(context).resultsHeader + searchTerm,
+                  '${AppLocalizations.of(context).resultsHeader} "$searchTerm"',
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: IconButton(
                   splashRadius: 15.0,
-                  onPressed: () => _searchForMoviesCubit.cancelSearch(),
+                  onPressed: _searchForMoviesCubit.cancelSearch,
                   icon: const Icon(
                     Icons.clear,
                     color: Colors.red,
