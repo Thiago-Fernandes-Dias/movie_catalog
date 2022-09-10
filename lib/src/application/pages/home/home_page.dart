@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_list/src/application/blocs/home_movie_list_cubit/home_movie_list_cubit.dart';
 import 'package:movie_list/src/application/blocs/search_for_movies_cubit/search_for_movies_cubit.dart';
+import 'package:movie_list/src/application/ui/effects/shimmer_loading/shimmer_loading.dart';
 import 'package:movie_list/src/domain/entities/entities.dart';
 import 'package:movie_list/src/application/l10n/app_localizations.dart';
-import 'package:movie_list/src/application/widgets/page_nav.dart';
 import 'package:movie_list/src/application/widgets/search_box.dart';
 import 'package:movie_list/src/application/widgets/shared/text_format.dart';
 import 'package:movie_list/src/application/widgets/tmdb.dart';
@@ -41,42 +41,45 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Movies Catalog'),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          SearchBar(
-            onSearch: (text) {
-              _searchForMoviesCubit.searchMoviesBySearchTerm(text);
-            },
-          ),
-          Expanded(
-            child: BlocBuilder<SearchForMoviesCubit, SearchForMoviesState>(
-              builder: (_, state) {
-                if (state is SearchForMoviesIdleState) {
-                  return const _MovieLists();
-                } else if (state is LoadingSearchResult) {
-                  return Column(
-                    children: const [
-                      _ResultHeader(),
-                      Expanded(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    ],
-                  );
-                } else if (state is LoadedSearchResult) {
-                  return Column(
-                    children: const [
-                      _ResultHeader(),
-                      Expanded(child: _SearchResult())
-                    ],
-                  );
-                }
-                return nil;
+      body: Shimmer(
+        linearGradient: _shimmerGradient,
+        child: Column(
+          children: [
+            SearchBar(
+              onSearch: (text) {
+                _searchForMoviesCubit.searchMoviesBySearchTerm(text);
               },
             ),
-          ),
-        ],
+            Expanded(
+              child: BlocBuilder<SearchForMoviesCubit, SearchForMoviesState>(
+                builder: (_, state) {
+                  if (state is SearchForMoviesIdleState) {
+                    return const _MovieLists();
+                  } else if (state is LoadingSearchResult) {
+                    return Column(
+                      children: const [
+                        _ResultHeader(),
+                        Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      ],
+                    );
+                  } else if (state is LoadedSearchResult) {
+                    return Column(
+                      children: const [
+                        _ResultHeader(),
+                        Expanded(child: _SearchResult())
+                      ],
+                    );
+                  }
+                  return nil;
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
