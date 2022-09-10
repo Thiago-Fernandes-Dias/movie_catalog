@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_list/src/application/blocs/home_movie_list_cubit/home_movie_list_cubit.dart';
 import 'package:movie_list/src/application/blocs/search_for_movies_cubit/search_for_movies_cubit.dart';
-import 'package:movie_list/src/application/ui/effects/shimmers/shimmer_loading.dart';
+import 'package:movie_list/src/application/ui/effects/shimmer_loading/shimmer_loading.dart';
 import 'package:movie_list/src/domain/entities/entities.dart';
 import 'package:movie_list/src/application/l10n/app_localizations.dart';
 import 'package:movie_list/src/application/widgets/search_box.dart';

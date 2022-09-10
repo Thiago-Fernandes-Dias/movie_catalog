@@ -68,25 +68,28 @@ class _MovieListsHorizontalListBuilder extends StatelessWidget {
               tag: '$baseImagesUrl${movies[index].posterPath}',
               child: AspectRatio(
                 aspectRatio: .67,
-                child: CachedNetworkImage(
-                  imageUrl: '$baseImagesUrl${movies[index].posterPath}',
-                  fit: BoxFit.fitHeight,
-                  placeholder: (_, ___) {
-                    return ShimmerLoading(
-                      isLoading: true,                      
-                      child: Container(
-                        alignment: Alignment.center,
-                        color: Colors.black,
-                        child: Text(''),
-                      ),
-                    );
-                  },
-                  errorWidget: (_, __, ___) {
-                    return Image.asset(
-                      'assets/jpg/noposter.jpg',
-                      fit: BoxFit.fitHeight,
-                    );
-                  },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    imageUrl: '$baseImagesUrl${movies[index].posterPath}',
+                    fit: BoxFit.fitHeight,
+                    placeholder: (_, ___) {
+                      return ShimmerLoading(
+                        isLoading: true,                      
+                        child: Container(
+                          alignment: Alignment.center,
+                          color: Colors.black,
+                          child: nil,
+                        ),
+                      );
+                    },
+                    errorWidget: (_, __, ___) {
+                      return Image.asset(
+                        'assets/jpg/noposter.jpg',
+                        fit: BoxFit.fitHeight,
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
