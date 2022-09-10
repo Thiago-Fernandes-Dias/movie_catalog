@@ -52,8 +52,8 @@ class _MovieListsHorizontalListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 160,
+    return AspectRatio(
+      aspectRatio: 1.75,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
@@ -64,32 +64,29 @@ class _MovieListsHorizontalListBuilder extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () => context.go('/movie/${movies[index].id}'),
-            child: Hero(
-              tag: '$baseImagesUrl${movies[index].posterPath}',
-              child: AspectRatio(
-                aspectRatio: .67,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
-                    imageUrl: '$baseImagesUrl${movies[index].posterPath}',
-                    fit: BoxFit.fitHeight,
-                    placeholder: (_, ___) {
-                      return ShimmerLoading(
-                        isLoading: true,                      
-                        child: Container(
-                          alignment: Alignment.center,
-                          color: Colors.black,
-                          child: nil,
-                        ),
-                      );
-                    },
-                    errorWidget: (_, __, ___) {
-                      return Image.asset(
-                        'assets/jpg/noposter.jpg',
-                        fit: BoxFit.fitHeight,
-                      );
-                    },
-                  ),
+            child: AspectRatio(
+              aspectRatio: .67,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(
+                  imageUrl: '$baseImagesUrl${movies[index].posterPath}',
+                  fit: BoxFit.fitHeight,
+                  placeholder: (_, ___) {
+                    return ShimmerLoading(
+                      isLoading: true,                      
+                      child: Container(
+                        alignment: Alignment.center,
+                        color: Colors.black,
+                        child: nil,
+                      ),
+                    );
+                  },
+                  errorWidget: (_, __, ___) {
+                    return Image.asset(
+                      'assets/jpg/noposter.jpg',
+                      fit: BoxFit.fitHeight,
+                    );
+                  },
                 ),
               ),
             ),

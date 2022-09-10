@@ -79,18 +79,15 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 Container(
                   padding: const EdgeInsets.only(bottom: 20),
                   height: MediaQuery.of(context).size.height * .6,
-                  child: Hero(
-                    tag: '${env.tmdbImageUrl}/${movie.posterPath}',
-                    child: CachedNetworkImage(
-                      imageUrl: '${env.tmdbImageUrl}${movie.posterPath}',
-                      fit: BoxFit.contain,
-                      errorWidget: (_, __, ___) {
-                        return Image.asset(
-                          'assets/jpg/noposter.jpg',
-                          fit: BoxFit.fitHeight,
-                        );
-                      },
-                    ),
+                  child: CachedNetworkImage(
+                    imageUrl: '${env.tmdbImageUrl}${movie.posterPath}',
+                    fit: BoxFit.contain,
+                    errorWidget: (_, __, ___) {
+                      return Image.asset(
+                        'assets/jpg/noposter.jpg',
+                        fit: BoxFit.fitHeight,
+                      );
+                    },
                   ),
                 ),
                 _MovieFields(),
