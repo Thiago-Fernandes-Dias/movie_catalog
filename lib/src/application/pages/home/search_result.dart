@@ -40,10 +40,17 @@ class _SearchResultItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late String subtitleText;
+    final releaseDate = movieInfo.releaseDate;
+    if (releaseDate != null) {
+      subtitleText = releaseDate.replaceAll('-', '/');
+    } else {
+      subtitleText = '';
+    }
     return ListTile(
       title: Text(movieInfo.title),
       subtitle: Text(
-        movieInfo.releaseDate!.substring(0, 4),
+        subtitleText,
         style: const TextStyle(color: Colors.grey),
       ),
       trailing: Icon(
@@ -51,7 +58,7 @@ class _SearchResultItem extends StatelessWidget {
         size: 25,
         color: Colors.grey.shade400,
       ),
-      onTap: () => context.go('/movies/${movieInfo.id}'),
+      onTap: () => context.go('/movie/${movieInfo.id}'),
     );
   }
 }
