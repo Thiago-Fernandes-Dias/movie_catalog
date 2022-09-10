@@ -63,7 +63,7 @@ class _MovieListsHorizontalListBuilder extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 10),        
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => context.go('/movie/${movies[index].id}'),
+            onTap: () => context.push('/movie/${movies[index].id}'),
             child: AspectRatio(
               aspectRatio: .67,
               child: ClipRRect(

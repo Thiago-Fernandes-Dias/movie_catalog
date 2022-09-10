@@ -48,7 +48,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           splashRadius: 15.0,
-          onPressed: () => context.go('/'),
+          onPressed: context.pop,
         ),
       ),
       body: BlocBuilder<MovieDetailsCubit, MovieDetailsState>(

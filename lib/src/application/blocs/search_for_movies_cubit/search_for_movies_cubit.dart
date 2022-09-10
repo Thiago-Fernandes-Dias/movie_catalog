@@ -22,6 +22,9 @@ class SearchForMoviesCubitImpl extends SearchForMoviesCubit {
     emit(LoadingSearchResult(searchTerm: term));
     try {
       var searchResult = await searchRepository.seachMoviesByTitle(term);
+      if (state is SearchForMoviesIdleState) {
+        return;
+      }
       emit(LoadedSearchResult(searchResult: searchResult, searchTerm: term));
     } on Exception catch (e) {
       emit(SearchForMoviesErrorState(error: e));

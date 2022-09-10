@@ -58,7 +58,7 @@ class _SearchResultItem extends StatelessWidget {
         size: 25,
         color: Colors.grey.shade400,
       ),
-      onTap: () => context.go('/movie/${movieInfo.id}'),
+      onTap: () => context.push('/movie/${movieInfo.id}'),
     );
   }
 }
