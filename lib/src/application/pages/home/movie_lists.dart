@@ -1,12 +1,26 @@
 part of 'home_page.dart';
 
-class _MovieLists extends StatelessWidget {
+class _MovieLists extends StatefulWidget {
   const _MovieLists();
 
   @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+  State<_MovieLists> createState() => _MovieListsState();
+}
 
+class _MovieListsState extends State<_MovieLists> {
+  late HomeMovieListCubit _homeMovieListsCubit;
+  late AppLocalizations _localizations;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _homeMovieListsCubit = context.read();
+    _homeMovieListsCubit.getHomeMovieLists();
+    _localizations = AppLocalizations.of(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<HomeMovieListCubit, HomeMovieListState>(
       builder: (context, state) {
         if (state is LoadingMovieLists) {
@@ -22,7 +36,7 @@ class _MovieLists extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 20.0, top: 20),
-                    child: fieldTitle(localizations.topRated),
+                    child: fieldTitle(_localizations.topRated),
                   ),
                   _MovieListsHorizontalListBuilder(topRatedMovies),
                 ],
@@ -31,7 +45,7 @@ class _MovieLists extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 20.0, top: 20),
-                    child: fieldTitle(localizations.mostPopular),
+                    child: fieldTitle(_localizations.mostPopular),
                   ),
                   _MovieListsHorizontalListBuilder(mostPopularMovies),
                 ],

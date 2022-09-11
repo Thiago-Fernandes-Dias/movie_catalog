@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movie_list/src/core/env.dart';
-import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/application/blocs/movie_details/movie_details_cubit.dart';
-import 'package:movie_list/src/application/l10n/app_localizations.dart';
-import 'package:movie_list/src/application/widgets/shared/network_loading.dart';
-import 'package:movie_list/src/application/widgets/shared/text_format.dart';
-import 'package:movie_list/src/application/widgets/tmdb.dart';
 import 'package:nil/nil.dart';
 
-part 'movie_fields.dart';
+import '../../../core/env.dart';
+import '../../../domain/entities/entities.dart';
+import '../../blocs/movie_details/movie_details_cubit.dart';
+import '../../l10n/app_localizations.dart';
+import '../../widgets/shared/network_loading.dart';
+import '../../widgets/shared/text_format.dart';
+import '../../widgets/tmdb.dart';
+
 part 'credit_fields.dart';
+part 'movie_fields.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   const MovieDetailsPage(this.movieId, {super.key});

@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_list/src/data/repositories/repositories.dart';
-import 'package:movie_list/src/domain/entities/entities.dart';
+
+import '../../../data/repositories/repositories.dart';
+import '../../../domain/entities/entities.dart';
 
 part 'search_for_movies_state.dart';
 
@@ -21,7 +22,7 @@ class SearchForMoviesCubitImpl extends SearchForMoviesCubit {
   Future<void> searchMoviesBySearchTerm(String term) async {
     emit(LoadingSearchResult(searchTerm: term));
     try {
-      var searchResult = await searchRepository.seachMoviesByTitle(term);
+      var searchResult = await searchRepository.searchMoviesByTitle(term);
       if (state is SearchForMoviesIdleState) {
         return;
       }

@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_list/src/data/repositories/repositories.dart';
-import 'package:movie_list/src/domain/entities/entities.dart';
+
+import '../../../data/repositories/repositories.dart';
+import '../../../domain/entities/entities.dart';
 
 part 'home_movie_list_state.dart';
 

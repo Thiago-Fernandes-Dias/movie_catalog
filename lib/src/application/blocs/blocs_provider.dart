@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_list/src/application/blocs/home_movie_list_cubit/home_movie_list_cubit.dart';
-import 'package:movie_list/src/application/blocs/movie_details/movie_details_cubit.dart';
-import 'package:movie_list/src/application/blocs/search_for_movies_cubit/search_for_movies_cubit.dart';
-import 'package:movie_list/src/data/repositories/repositories.dart';
+
+import '../../data/repositories/repositories.dart';
+import 'home_movie_list_cubit/home_movie_list_cubit.dart';
+import 'movie_details/movie_details_cubit.dart';
+import 'search_for_movies_cubit/search_for_movies_cubit.dart';
 
 class BlocsProvider extends StatelessWidget {
   const BlocsProvider({super.key, required this.child});

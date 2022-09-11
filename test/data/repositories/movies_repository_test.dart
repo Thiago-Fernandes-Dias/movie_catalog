@@ -13,7 +13,6 @@ const _movieId = '1234';
 const _invalidMovieId = '';
 const _errorStatusCode = 0;
 const _defaultPage = 1;
-const _defaultTotalPages = 5;
 
 void main() {
 
@@ -51,7 +50,7 @@ void main() {
       () async {
         const id = _invalidMovieId;
         final tmdbError = TMDBError.fromJsonResponse({
-          'status_message': "Invalid movie ID",
+          'status_message': 'Invalid movie ID',
           'status_code': _errorStatusCode,
         }); 
         when(mockMoviesRepository.getMovieDetails(id))
@@ -65,9 +64,8 @@ void main() {
 
   group('getTopRatedMovies', () {
 
-    test(
-      'should return a "MovieList" with the "results" field pointing to '
-      'a list of "MovieInfo" and the "page" field equals to $_defaultPage',
+    test('should return a "MovieList" with the "results" field pointing to '
+         'a list of "MovieInfo" and the "page" field equals to $_defaultPage',
       () async {
         when(mockMoviesRepository.getTopRatedMovies(_defaultPage)).thenAnswer((_) async {
           final movieInfoList = <MovieInfo>[
