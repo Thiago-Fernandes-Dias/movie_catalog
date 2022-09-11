@@ -2,16 +2,17 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
-    # avoid_print: true
-    # prefer_single_quotes: true
-    # constant_identifier_names: true
-    # directives_ordering: true
-    # curly_braces_in_flow_control_structures: true
-    # slash_for_doc_comments: true
-    # package_api_docs: true
-    # public_member_api_docs: true
-    # comment_references: true
-    # implementation_imports: true
-    # prefer_relative_imports: true
-    # avoid_init_to_null: true
-    # unawaited_futures: true
+    avoid_print: true
+    prefer_single_quotes: true
+    constant_identifier_names: true
+    directives_ordering: true
+    curly_braces_in_flow_control_structures: true
+    slash_for_doc_comments: true
+    package_api_docs: true
+    public_member_api_docs: true
+    comment_references: true
+    implementation_imports: true
+    prefer_relative_imports: true
+    avoid_init_to_null: true
+    unawaited_futures: true
+    prefer_function_declarations_over_variables: false
