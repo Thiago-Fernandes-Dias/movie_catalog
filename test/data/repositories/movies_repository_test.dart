@@ -15,34 +15,35 @@ const _errorStatusCode = 0;
 const _defaultPage = 1;
 
 void main() {
-
   final mockMoviesRepository = MockMoviesRepository();
 
-  group('movie details', () {
-
-    test('should return a movie with id $_movieId', () async {
-      when(mockMoviesRepository.getMovieDetails(_movieId)).thenAnswer((_) async {
-        final movieDetails = MovieDetails(
-          budget: 0,
-          genres: [],
-          id: int.parse(_movieId),
-          originalLanguage: 'en',
-          originalTitle: 'Movie 1234',
-          popularity: 5,
-          companies: [],
-          countries: [],
-          revenue: 0,
-          status: MovieStatus.planned,
-          title: 'Movie 1234',
-          voteAverage: 0,
-          voteCount: 0,
-        );
-        return movieDetails;
-      });
-      final movieDetails = await mockMoviesRepository.getMovieDetails(_movieId);
-      expect(movieDetails, isA<MovieDetails>());
-      expect(movieDetails.id, int.parse(_movieId));
-    });
+  group('getMovieDetails', () {
+    test(
+      'should return a movie with id $_movieId',
+      () async {
+        when(mockMoviesRepository.getMovieDetails(_movieId)).thenAnswer((_) async {
+          final movieDetails = MovieDetails(
+            budget: 0,
+            genres: [],
+            id: int.parse(_movieId),
+            originalLanguage: 'en',
+            originalTitle: 'Movie 1234',
+            popularity: 5,
+            companies: [],
+            countries: [],
+            revenue: 0,
+            status: MovieStatus.planned,
+            title: 'Movie 1234',
+            voteAverage: 0,
+            voteCount: 0,
+          );
+          return movieDetails;
+        });
+        final movieDetails = await mockMoviesRepository.getMovieDetails(_movieId);
+        expect(movieDetails, isA<MovieDetails>());
+        expect(movieDetails.id, int.parse(_movieId));
+      },
+    );
 
     test(
       'should thrown an TMDBError when trying to fetch '
@@ -52,10 +53,9 @@ void main() {
         final tmdbError = TMDBError.fromJsonResponse({
           'status_message': 'Invalid movie ID',
           'status_code': _errorStatusCode,
-        }); 
-        when(mockMoviesRepository.getMovieDetails(id))
-            .thenThrow(tmdbError);
-          
+        });
+        when(mockMoviesRepository.getMovieDetails(id)).thenThrow(tmdbError);
+
         final laterCb = () async => await mockMoviesRepository.getMovieDetails(id);
         await expectLater(laterCb, throwsA(isA<TMDBError>()));
       },
@@ -63,9 +63,9 @@ void main() {
   });
 
   group('getTopRatedMovies', () {
-
-    test('should return a "MovieList" with the "results" field pointing to '
-         'a list of "MovieInfo" and the "page" field equals to $_defaultPage',
+    test(
+      'should return a "MovieList" with the "results" field pointing to '
+      'a list of "MovieInfo" and the "page" field equals to $_defaultPage',
       () async {
         when(mockMoviesRepository.getTopRatedMovies(_defaultPage)).thenAnswer((_) async {
           final movieInfoList = <MovieInfo>[
