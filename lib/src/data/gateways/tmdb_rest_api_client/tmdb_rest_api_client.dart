@@ -68,6 +68,7 @@ class TMDBRestApiClientImpl implements TMDBRestApiClient {
     late Exception exception;
     switch(statusCode) {
       case 200:
+      case 201:
         return;
       case 422:
         exception = TMDBUnprocessableEntityError.fromJsonResponse(responseBody);
