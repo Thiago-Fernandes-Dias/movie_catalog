@@ -1,3 +1,5 @@
+import '../../core/errors/errors.dart';
+
 enum MovieStatus {
   rumored(),
   planned(),
@@ -25,7 +27,7 @@ enum MovieStatus {
       case inProduction: return 'In Production';
       case postProduction: return 'Post Production';
       case released: return 'Released';
-      default: return 'Canceled';
+      case canceled: return 'Canceled';
     }
   }
 }
