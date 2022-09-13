@@ -1,5 +1,5 @@
-import 'package:movie_list/src/domain/entities/entities.dart';
-import 'package:movie_list/src/domain/enums/movie_status.dart';
+import '../../domain/entities/entities.dart';
+import '../../domain/enums/movie_status.dart';
 
 part 'cast_serializer.dart';
 part 'companies_serializer.dart';

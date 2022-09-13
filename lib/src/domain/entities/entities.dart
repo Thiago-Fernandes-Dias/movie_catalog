@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:movie_list/src/domain/enums/movie_status.dart';
+import '../enums/movie_status.dart';
 
 part 'cast.dart';
 part 'companies.dart';
