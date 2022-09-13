@@ -15,7 +15,9 @@ enum MovieStatus {
       case 'In Production': return inProduction;
       case 'Post Production': return postProduction;
       case 'Released': return released;
-      default: return canceled;
+      case 'Canceled' : return canceled;
+      default:
+        throw SerializationError('Invalid movie status');
     } 
   }
 
