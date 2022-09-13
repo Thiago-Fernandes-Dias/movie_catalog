@@ -5,12 +5,13 @@ abstract class SearchRepository {
 }
 
 class SearchRepositoryImpl implements SearchRepository {
-  final _httpClient = HttpClient();
+  const SearchRepositoryImpl(this.tmdbClient);
+
+  final TMDBRestApiClient tmdbClient;
 
   @override
   Future<MovieList> searchMoviesByTitle(String movieTitle) async {
-    var response = await _httpClient.get('${env.tmdbApiUrl}/search/movie?query=$movieTitle');
-    if (response.statusCode != 200) throw TMDBError.fromJsonResponse(response.data);
-    return movieListSerializer.from(response.data);
+    var response = await tmdbClient.get('${env.tmdbApiUrl}/search/movie?query=$movieTitle');
+    return movieListSerializer.from(response);
   }
 }
