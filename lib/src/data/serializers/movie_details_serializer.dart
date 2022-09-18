@@ -18,15 +18,23 @@ class MovieDetailsKeys {
   static const String releaseDate = 'releaseDate';
   static const String title = 'title';
   static const String voteAverage = 'vote_average';
-  static const String voteCount = 'vote_count'; 
+  static const String voteCount = 'vote_count';
 }
 
-class MovieDetailsSerializer implements Serializer<MovieDetails, Map<String, dynamic>> {
+class MovieDetailsSerializer
+    implements Serializer<MovieDetails, Map<String, dynamic>> {
   @override
   MovieDetails from(Map<String, dynamic> json) {
-    final rawGenres = List<Map<String, dynamic>>.from(json[MovieDetailsKeys.genres] as List);
-    final rawCompanies = List<Map<String, dynamic>>.from(json[MovieDetailsKeys.companies] as List);
-    final rawCountries = List<Map<String, dynamic>>.from(json[MovieDetailsKeys.countries] as List);
+    final rawGenres = List<Map<String, dynamic>>.from(
+      json[MovieDetailsKeys.genres] as List,
+    );
+    final rawCompanies = List<Map<String, dynamic>>.from(
+      json[MovieDetailsKeys.companies] as List,
+    );
+    final rawCountries = List<Map<String, dynamic>>.from(
+      json[MovieDetailsKeys.countries] as List,
+    );
+    final rawMovieStatus = json[MovieDetailsKeys.status] as String;
 
     final budget = json[MovieDetailsKeys.budget] as int;
     final genres = rawGenres.map(genresSerializer.from).toList();
@@ -42,8 +50,8 @@ class MovieDetailsSerializer implements Serializer<MovieDetails, Map<String, dyn
     final releaseDate = json[MovieDetailsKeys.releaseDate] as String?;
     final revenue = json[MovieDetailsKeys.revenue] as int;
     final runtime = json[MovieDetailsKeys.runtime] as int?;
-    final status = MovieStatus.fromString(json[MovieDetailsKeys.status] as String);
     final title = json[MovieDetailsKeys.title] as String;
+    final status = movieStatusSerializer.from(rawMovieStatus);
     final voteAverage = json[MovieDetailsKeys.voteAverage] as num;
     final voteCount = json[MovieDetailsKeys.voteCount] as int;
 
@@ -66,7 +74,7 @@ class MovieDetailsSerializer implements Serializer<MovieDetails, Map<String, dyn
       title: title,
       voteAverage: voteAverage,
       voteCount: voteCount,
-    ); 
+    );
   }
 
   @override
