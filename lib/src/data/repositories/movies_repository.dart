@@ -14,8 +14,15 @@ class MoviesRepositoryImpl implements MoviesRepository {
 
   @override
   Future<MovieDetails> getMovieDetails(String movieId) async {
-    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/$movieId');      
-    return movieDetailsSerializer.from(response);
+    try {
+      var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/$movieId');      
+      return movieDetailsSerializer.from(response);
+    } on TMDBRequestError catch (e) {
+      if (e.code == TMDBErrorCode.invalidId) {
+        throw InconsistentStateError.repository(e.message);
+      }
+      rethrow;
+    }
   }
   
   @override
