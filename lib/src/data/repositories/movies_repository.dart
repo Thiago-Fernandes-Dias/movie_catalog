@@ -8,33 +8,38 @@ abstract class MoviesRepository {
 }
 
 class MoviesRepositoryImpl implements MoviesRepository {
-  final _httpClient = HttpClient();
+  const MoviesRepositoryImpl(this.tmdbClient);
+
+  final TMDBRestApiClient tmdbClient;
 
   @override
   Future<MovieDetails> getMovieDetails(String movieId) async {
-    var response = await _httpClient.get("${env.tmdbApiUrl}/movie/$movieId");      
-    if (response.statusCode != 200) throw TMDBError.fromJsonResponse(response.data);
-    return movieDetailsSerializer.from(response.data);
+    try {
+      var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/$movieId');      
+      return movieDetailsSerializer.from(response);
+    } on TMDBRequestError catch (e) {
+      if (e.code == TMDBErrorCode.invalidId) {
+        throw InconsistentStateError.repository(e.message);
+      }
+      rethrow;
+    }
   }
   
   @override
   Future<MovieList> getTopRatedMovies(int page) async {
-    var response = await _httpClient.get("${env.tmdbApiUrl}/movie/top_rated?page=$page");
-    if (response.statusCode != 200) throw TMDBError.fromJsonResponse(response.data);
-    return movieListSerializer.from(response.data);
+    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/top_rated?page=$page');
+    return movieListSerializer.from(response);
   }
   
   @override
   Future<MovieList> getPopularMovies(int page) async {
-    var response = await _httpClient.get("${env.tmdbApiUrl}/movie/popular?page=$page");
-    if (response.statusCode != 200) throw TMDBError.fromJsonResponse(response.data);
-    return movieListSerializer.from(response.data);
+    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/popular?page=$page');
+    return movieListSerializer.from(response);
   }
   
   @override
   Future<Credits> getMovieCredits(String movieId) async {
-    var response = await _httpClient.get("${env.tmdbApiUrl}/movie/$movieId/credits");
-    if (response.statusCode != 200) throw TMDBError.fromJsonResponse(response.data);
-    return creditsSerializer.from(response.data);
+    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/$movieId/credits');
+    return creditsSerializer.from(response);
   }
 }

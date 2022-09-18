@@ -1,10 +1,30 @@
-part 'tmdb_error.dart';
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
-abstract class BaseError implements Exception {
+part 'inconsistent_state_error.dart';
+part 'serialization_error.dart';
+
+@immutable
+abstract class BaseError extends Error with EquatableMixin {
+  BaseError({required this.type, required this.message});
+
+  final ErrorType type;
   final String message;
-  
-  const BaseError({required this.message});
 
   @override
-  String toString() => "Error: $message";
+  List<Object?> get props => [message, type];
+
+  @override
+  String toString() => '$type - $message';
+}
+
+enum ErrorType {
+  // InconsistentStateError
+  insistentErrorState,
+  repositoryInconsistentState,
+  serviceInconsistentState,
+  gatewayInconsistentState,
+
+  // SerializationError
+  serialization,
 }

@@ -1,7 +1,1 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:movie_list/src/core/env.dart';
-
-part 'http_client.dart';
+export 'tmdb_rest_api_client/tmdb_rest_api_client.dart';

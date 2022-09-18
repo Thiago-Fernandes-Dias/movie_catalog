@@ -11,7 +11,7 @@
                 "--dart-define=TMDB_API_KEY=c20f47180f2db697f0fcd8ac821fb85c",
                 "--dart-define=TMDB_API_URL=https://api.themoviedb.org/3",
                 "--dart-define=TMDB_IMAGE_URL=https://image.tmdb.org/t/p/original",
-                "--dart-define=INCLUDE_ADULT=false",
+                "--dart-define=INCLUDE_ADULT=false"
             ]
         },
         {
@@ -24,8 +24,8 @@
                 "--dart-define=TMDB_API_KEY=c20f47180f2db697f0fcd8ac821fb85c",
                 "--dart-define=TMDB_API_URL=https://api.themoviedb.org/3",
                 "--dart-define=TMDB_IMAGE_URL=https://image.tmdb.org/t/p/original",
-                "--dart-define=INCLUDE_ADULT=false",
+                "--dart-define=INCLUDE_ADULT=false"
             ]
-        },
+        }
     ]
 }
