@@ -7,7 +7,9 @@ abstract class MoviesRepository {
   Future<Credits> getMovieCredits(String movieId);
 }
 
-class MoviesRepositoryImpl implements MoviesRepository {
+class MoviesRepositoryImpl
+    with DeviceNetworkConnectionMixin
+    implements MoviesRepository {
   const MoviesRepositoryImpl(this.tmdbClient);
 
   final TMDBRestApiClient tmdbClient;
@@ -15,31 +17,54 @@ class MoviesRepositoryImpl implements MoviesRepository {
   @override
   Future<MovieDetails> getMovieDetails(String movieId) async {
     try {
-      var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/$movieId');      
-      return movieDetailsSerializer.from(response);
+      final url = '${env.tmdbApiUrl}/movie/$movieId';
+      final response = await tmdbClient.get(url);
+      final movieDetails = movieDetailsSerializer.from(response);
+      return movieDetails;
     } on TMDBRequestError catch (e) {
       if (e.code == TMDBErrorCode.invalidId) {
-        throw InconsistentStateError.repository(e.message);
+        throw ResourceNotFoundError('Movie not found.');
       }
+      throw InconsistentStateError.repository(e.message);
+    } on TimeoutException {
+      throw RequestTimeoutError();
+    } on Exception {
+      await verifyNetworkConnection();
       rethrow;
     }
   }
-  
+
   @override
   Future<MovieList> getTopRatedMovies(int page) async {
-    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/top_rated?page=$page');
-    return movieListSerializer.from(response);
+    try {
+      final url = '${env.tmdbApiUrl}/movie/top_rated?page=$page';
+      final response = await tmdbClient.get(url);
+      final movieList = movieListSerializer.from(response);
+      return movieList;
+    } on Exception catch (_) {
+      await verifyNetworkConnection();
+      rethrow;
+    }
   }
-  
+
   @override
   Future<MovieList> getPopularMovies(int page) async {
-    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/popular?page=$page');
-    return movieListSerializer.from(response);
+    try {
+      final url = '${env.tmdbApiUrl}/movie/popular?page=$page';
+      final response = await tmdbClient.get(url);
+      final movieList = movieListSerializer.from(response);
+      return movieList;
+    } on Exception catch (_) {
+      await verifyNetworkConnection();
+      rethrow;
+    }
   }
-  
+
   @override
   Future<Credits> getMovieCredits(String movieId) async {
-    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/$movieId/credits');
-    return creditsSerializer.from(response);
+    final url = '${env.tmdbApiUrl}/movie/$movieId/credits';
+    final response = await tmdbClient.get(url);
+    final credits = creditsSerializer.from(response);
+    return credits;
   }
 }
