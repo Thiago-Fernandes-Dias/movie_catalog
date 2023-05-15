@@ -1,26 +1,17 @@
-import 'package:equatable/equatable.dart';
+part 'request_unknown_exception.dart';
+part 'request_timeout_exception.dart';
+part 'internet_connection_exception.dart';
 
-part 'validation_exception.dart';
+class BaseException implements Exception {
+  BaseException(this.message) {
+    for (final observer in observers) {
+      observer.call(this);
+    }
+  }
 
-abstract class BaseException extends Equatable implements Exception {
-  const BaseException({
-    required this.type,
-    this.message,
-    this.debugInfo,
-    this.debugData,
-  });
+  final String message;
 
-  final String? message;
-  final String? debugInfo;
-  final ExceptionType type;
-  final dynamic debugData;
-
-  @override
-  List<Object?> get props => [message, debugInfo, type, debugData];
+  static List<BaseExceptionObserver> observers = [];
 }
 
-enum ExceptionType {
-  emptyField,
-  fieldLengthExceeded,
-  failedToOpenUrl,
-}
+typedef BaseExceptionObserver = void Function(BaseException exception);

@@ -11,7 +11,7 @@ class SearchRepositoryImpl implements SearchRepository {
 
   @override
   Future<MovieList> searchMoviesByTitle(String movieTitle) async {
-    var response = await tmdbClient.get('${env.tmdbApiUrl}/search/movie?query=$movieTitle');
+    var response = await tmdbClient.get('search/movie?query=$movieTitle');
     return movieListSerializer.from(response);
   }
 }

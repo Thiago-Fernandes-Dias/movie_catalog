@@ -27,7 +27,7 @@ class MovieDetailsPage extends StatefulWidget {
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
   late final MovieDetailsCubit movieDetailsCubit;
-  late final AppLocalizations localizations;
+  late AppLocalizations localizations;
 
   @override
   void initState() {
@@ -36,13 +36,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    localizations = AppLocalizations.of(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(localizations.movieInfo),
@@ -61,9 +56,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             var movie = state.movieDetails!;
             return ListView(
               padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width >= 650 
-                    ? 200 
-                    : 0,
+                horizontal: MediaQuery.of(context).size.width >= 650 ? 200 : 0,
               ),
               children: [
                 Container(

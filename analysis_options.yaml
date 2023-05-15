@@ -6,10 +6,10 @@ linter:
     prefer_single_quotes: true
     constant_identifier_names: true
     directives_ordering: true
-    curly_braces_in_flow_control_structures: true
+    curly_braces_in_flow_control_structures: false
     slash_for_doc_comments: true
     package_api_docs: true
-    # public_member_api_docs: true
+    public_member_api_docs: false
     comment_references: true
     implementation_imports: true
     prefer_relative_imports: true
