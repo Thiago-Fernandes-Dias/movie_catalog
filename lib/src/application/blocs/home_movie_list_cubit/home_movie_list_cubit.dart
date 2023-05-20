@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/faults/exceptions/exceptions.dart';
 import '../../../data/repositories/repositories.dart';
 import '../../../domain/entities/entities.dart';
 
@@ -10,22 +11,38 @@ abstract class HomeMovieListCubit extends Cubit<HomeMovieListState> {
   HomeMovieListCubit() : super(LoadingMovieLists());
 
   Future<void> getHomeMovieLists();
+  Future<void> searchForMovies(String searchTerm);
 }
 
 class HomeMovieListCubitImpl extends HomeMovieListCubit {
-  HomeMovieListCubitImpl(this.moviesRepository);
-  
-  final MoviesRepository moviesRepository;
+  HomeMovieListCubitImpl(this._moviesRepository, this._searchRepository);
+
+  final MoviesRepository _moviesRepository;
+  final SearchRepository _searchRepository;
 
   @override
   Future<void> getHomeMovieLists() async {
     try {
-      var topRatedMovies = await moviesRepository.getTopRatedMovies(1);
-      var mostPopularMovies = await moviesRepository.getPopularMovies(1);
-      emit(LoadedMovieList(topRatedMovies: topRatedMovies.results, 
-                           mostPopularMovies: mostPopularMovies.results));
-    } on Exception catch (e) {
-      emit(HomeMovieListErrorState(error: e));
+      final topRatedMovies = await _moviesRepository.getTopRatedMovies(1);
+      final mostPopularMovies = await _moviesRepository.getPopularMovies(1);
+      final newState = LoadedMovieList(
+        topRatedMovies: topRatedMovies.results,
+        mostPopularMovies: mostPopularMovies.results,
+      );
+      emit(newState);
+    } on BaseException catch (e) {
+      emit(HomeMovieListErrorState(exception: e));
+    }
+  }
+  
+  @override
+  Future<void> searchForMovies(String searchTerm) async {
+    emit(LoadingSearchResults(searchTerm: searchTerm));
+    try {
+      final searchResults = await _searchRepository.searchMoviesByTitle(searchTerm);
+      emit(LoadedSearchResults(searchResults: searchResults.results, searchTerm: searchTerm));
+    } on BaseException catch (e) {
+      emit(MovieSearchError(exception: e, searchTerm: searchTerm));
     }
   }
 }

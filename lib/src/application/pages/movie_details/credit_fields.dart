@@ -17,9 +17,7 @@ class CreditsFields extends StatelessWidget {
             padding: const EdgeInsets.only(top: 15),
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: MediaQuery.of(context).size.width >= 650 
-                    ? 3 
-                    : 1,
+                crossAxisCount: MediaQuery.of(context).size.width >= 650 ? 3 : 1,
                 mainAxisSpacing: 20,
                 mainAxisExtent: 150,
               ),
@@ -42,17 +40,17 @@ class _CastTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var itemHeight = MediaQuery.of(context).size.height * .2;
+    final itemHeight = MediaQuery.of(context).size.height * .2;
     const itemPadding = EdgeInsets.symmetric(
       horizontal: 6,
       vertical: 6,
     );
     const castName = TextStyle(
       fontSize: 16,
+      color: Colors.black,
     );
-    var castCharacter = TextStyle(
-      color: Colors.grey.shade600,
-    );
+    final castCharacter = TextStyle(color: Colors.grey.shade900);
+    final characterText = 'as ${cast.character != '' ? cast.character : AppLocalizations.of(context).gest}';
 
     return Row(
       children: [
@@ -77,9 +75,7 @@ class _CastTile extends StatelessWidget {
                 style: castName,
                 children: [
                   TextSpan(
-                    text: cast.character != ''
-                        ? cast.character
-                        : AppLocalizations.of(context).gest,
+                    text: characterText,
                     style: castCharacter,
                   ),
                 ],

@@ -14,32 +14,35 @@ class MoviesRepositoryImpl implements MoviesRepository {
 
   @override
   Future<MovieDetails> getMovieDetails(String movieId) async {
-    try {
-      var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/$movieId');      
-      return movieDetailsSerializer.from(response);
-    } on TMDBRequestError catch (e) {
-      if (e.code == TMDBErrorCode.invalidId) {
-        throw InconsistentStateError.repository(e.message);
-      }
-      rethrow;
-    }
+    final url = '$_path/$movieId';
+    final response = await tmdbClient.get(url);
+    final movieDetails = movieDetailsSerializer.from(response);
+    return movieDetails;
   }
-  
+
   @override
   Future<MovieList> getTopRatedMovies(int page) async {
-    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/top_rated?page=$page');
-    return movieListSerializer.from(response);
+    final path = '$_path/top_rated?page=$page';
+    final response = await tmdbClient.get(path);
+    final movieList = movieListSerializer.from(response);
+    return movieList;
   }
-  
+
   @override
   Future<MovieList> getPopularMovies(int page) async {
-    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/popular?page=$page');
-    return movieListSerializer.from(response);
+    final url = '$_path/popular?page=$page';
+    final response = await tmdbClient.get(url);
+    final movieList = movieListSerializer.from(response);
+    return movieList;
   }
-  
+
   @override
   Future<Credits> getMovieCredits(String movieId) async {
-    var response = await tmdbClient.get('${env.tmdbApiUrl}/movie/$movieId/credits');
-    return creditsSerializer.from(response);
+    final url = '$_path/$movieId/credits';
+    final response = await tmdbClient.get(url);
+    final credits = creditsSerializer.from(response);
+    return credits;
   }
+
+  final _path = 'movie';
 }

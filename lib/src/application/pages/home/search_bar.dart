@@ -9,13 +9,13 @@ class _SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<_SearchBar> {
   late final TextEditingController _controller;
-  late final SearchForMoviesCubit _searchForMoviesCubit;
+  late final HomeMovieListCubit _homeMovieListCubit;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _searchForMoviesCubit = context.read();
+    _homeMovieListCubit = context.read();
   }
 
   @override
@@ -26,14 +26,7 @@ class _SearchBarState extends State<_SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SearchForMoviesCubit, SearchForMoviesState>(
-      bloc: _searchForMoviesCubit,
-      listener: (_, state) {
-        if (state is SearchForMoviesIdleState) {
-          _controller.clear();
-        }
-      },
-      child: Container(
+    return Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         color: const Color.fromARGB(255, 245, 245, 245),
         child: Focus(
@@ -65,11 +58,10 @@ class _SearchBarState extends State<_SearchBar> {
             ),
           ),
         ),
-      ),
     );
   }
 
   void _searchAction(String term) {
-    _searchForMoviesCubit.searchMoviesBySearchTerm(term);
+    _homeMovieListCubit.searchForMovies(term);
   }
 }

@@ -5,6 +5,6 @@ Widget _homePageBuilder(BuildContext context, GoRouterState state) {
 }
 
 Widget _movieDetailsPageBuilder(BuildContext context, GoRouterState state) {
-  var movieId = state.params['id'] as String;
+  var movieId = state.pathParameters['id'] as String;
   return MovieDetailsPage(movieId);
 }
