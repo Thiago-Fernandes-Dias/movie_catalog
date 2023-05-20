@@ -87,28 +87,6 @@ class __HomePageBodyState extends State<_HomePageBody> {
       ),
     );
   }
-
-  void _showBottomBarIfNoInternet(BaseException exception) {
-    if (exception is InternetConnectionException) {
-      showBottomSheet(
-        context: context,
-        builder: (context) => Container(
-          color: Colors.grey,
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  exception.message,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-  }
 }
 
 class _MovieListsHorizontalListBuilder extends StatelessWidget {
