@@ -19,7 +19,6 @@ class BlocsProvider extends StatelessWidget {
     final internetConnectivityChecker = InternetConnectionCheckerPlus();
     final connectivity = Connectivity();
     final tmdbClient = TMDBRestApiClientImpl(
-      connectivity: connectivity,
       internetConnectionChecker: internetConnectivityChecker,
     );
     final searchRepository = SearchRepositoryImpl(tmdbClient);

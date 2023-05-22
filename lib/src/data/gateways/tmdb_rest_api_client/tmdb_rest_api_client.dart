@@ -14,108 +14,47 @@ export 'errors/errors.dart';
 
 abstract class TMDBRestApiClient {
   Future<Map<String, dynamic>> get(String path);
-  Future<Map<String, dynamic>> post(String path, {Map<String, dynamic> data});
-  Future<Map<String, dynamic>> put(String path, {Map<String, dynamic> data});
-  Future<Map<String, dynamic>> delete(String path, {Map<String, dynamic>? data});
 }
 
 class TMDBRestApiClientImpl implements TMDBRestApiClient {
   late final http.Client _httpClient;
   late final InternetConnectionCheckerPlus _internetConnectionChecker;
-  late final Connectivity _connectivity;
+  late final TMDBUrlBuilder _tmdbUrlBuilder;
 
   TMDBRestApiClientImpl({
     http.Client? client,
-    Connectivity? connectivity,
+    TMDBUrlBuilder? tmdbUrlBuilder,
     InternetConnectionCheckerPlus? internetConnectionChecker,
   }) {
     _httpClient = client ?? http.Client();
-    _connectivity = connectivity ?? Connectivity();
     _internetConnectionChecker = internetConnectionChecker ?? InternetConnectionCheckerPlus();
-  }
-
-  @override
-  Future<Map<String, dynamic>> delete(
-    String path, {
-    Map<String, dynamic>? data,
-  }) async {
-    return _request(path, data: data, method: _Method.delete);
+    _tmdbUrlBuilder = tmdbUrlBuilder ?? TMDBUrlBuilder();
   }
 
   @override
   Future<Map<String, dynamic>> get(String path) async {
-    return _request(path, method: _Method.get);
-  }
-
-  @override
-  Future<Map<String, dynamic>> post(
-    String path, {
-    Map<String, dynamic>? data,
-  }) async {
-    return _request(path, method: _Method.post, data: data);
-  }
-
-  @override
-  Future<Map<String, dynamic>> put(
-    String path, {
-    Map<String, dynamic>? data,
-  }) async {
-    return _request(path, method: _Method.put, data: data);
-  }
-
-  Uri _urlToUri(String url) {
-    final uriFromUrl = Uri.parse(url);
-    final uri = uriFromUrl.replace(queryParameters: {
-      ...uriFromUrl.queryParameters,
-      'api_key': env.tmdbApiKey,
-      'include_adult': '${env.includeAdult}',
-    });
-
-    return uri;
-  }
-
-  void _verifyStatusCode(int statusCode, Map<String, dynamic> responseBody) {
-    late Exception exception;
-    switch (statusCode) {
-      case 200:
-      case 201:
-        return;
-      case 422:
-        exception = TMDBUnprocessableEntityError.fromJsonResponse(responseBody);
-        break;
-      default:
-        exception = TMDBRequestError.fromJsonResponse(responseBody);
-    }
-    throw exception;
-  }
-
-  Future<Map<String, dynamic>> _request(String path, {required _Method method, Map<String, dynamic>? data}) async {
-    await _verifyInternetStatus();
+    await _verifyInternetConnection();
     final apiUrl = env.tmdbApiUrl;
-    final resourceUri = _urlToUri('$apiUrl$path');
-    final response = await _execRequest(method, resourceUri, data);
+    final resourceUri = _tmdbUrlBuilder.convertToUriAndAddQueryParameters('$apiUrl$path');
+    final response = await _execRequest(uri: resourceUri);
     final responseParsed = await compute(jsonDecode, response.body);
     _verifyStatusCode(response.statusCode, responseParsed);
     return responseParsed;
   }
 
-  Future<http.Response> _execRequest(_Method method, Uri uri, Map<String, dynamic>? data) async {
-    late http.Response response;
+  void _verifyStatusCode(int statusCode, Map<String, dynamic> responseBody) {
+    switch (statusCode) {
+      case 200:
+      case 201:
+        return;
+      default:
+        throw TMDBRequestError.fromJsonResponse(responseBody);
+    }
+  }
+
+  Future<http.Response> _execRequest({required Uri uri}) async {
     try {
-      switch (method) {
-        case _Method.get:
-          response = await _httpClient.get(uri);
-          break;
-        case _Method.post:
-          response = await _httpClient.post(uri, body: data);
-          break;
-        case _Method.put:
-          response = await _httpClient.put(uri, body: data);
-          break;
-        case _Method.delete:
-          response = await _httpClient.delete(uri, body: data);
-          break;
-      }
+      final response = _httpClient.get(uri);
       return response;
     } on TimeoutException {
       throw RequestTimeoutException();
@@ -124,29 +63,23 @@ class TMDBRestApiClientImpl implements TMDBRestApiClient {
     }
   }
 
-  Future<void> _verifyInternetStatus() async {
-    final connectedToNetworkValues = [
-      ConnectivityResult.mobile,
-      ConnectivityResult.wifi,
-    ];
-    final connectivityResult = await _connectivity.checkConnectivity();
-    if (connectedToNetworkValues.contains(connectivityResult)) {
-      await _verifyInternetConnection();
-      return;
-    }
-    throw InternetConnectionException(type: InternetConnectionExceptionType.noNetwork);
-  }
-
   Future<void> _verifyInternetConnection() async {
     final hasConnection = await _internetConnectionChecker.hasConnection;
     if (hasConnection) return;
-    throw InternetConnectionException(type: InternetConnectionExceptionType.noInternet);
+    throw InternetConnectionException();
   }
 }
 
-enum _Method {
-  get,
-  post,
-  put,
-  delete,
+@visibleForTesting
+class TMDBUrlBuilder {
+  Uri convertToUriAndAddQueryParameters(String url) {
+    final uriFromUrl = Uri.parse(url);
+    final uri = uriFromUrl.replace(queryParameters: {
+      ...uriFromUrl.queryParameters,
+      'api_key': env.tmdbApiKey,
+      'include_adult': '${env.includeAdult}',
+      'language': env.tmdbLanguage,
+    });
+    return uri;
+  }
 }

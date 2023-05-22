@@ -1,11 +1,12 @@
-abstract class Enviroment {
+abstract class Environment {
   String get tmdbApiUrl;
   String get tmdbApiKey;
   String get tmdbImageUrl;
   bool get includeAdult;
+  String get tmdbLanguage;
 }
 
-class EnviromentImpl implements Enviroment {
+class EnvironmentImpl implements Environment {
   @override
   bool get includeAdult => const bool.fromEnvironment('INCLUDE_ADULT');
 
@@ -18,6 +19,8 @@ class EnviromentImpl implements Enviroment {
   @override
   String get tmdbImageUrl => const String.fromEnvironment('TMDB_IMAGE_URL');
 
+  @override
+  String get tmdbLanguage => const String.fromEnvironment('TMDB_LANGUAGE');
 }
 
-final env = EnviromentImpl();
+final env = EnvironmentImpl();
