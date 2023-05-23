@@ -1,6 +1,6 @@
 part of 'entities.dart';
 
-class Cast {
+class Cast extends Equatable {
   final String name;
   final String character;
   String? profilePath;
@@ -18,4 +18,7 @@ class Cast {
       profilePath: json['profile_path'],
     );
   }
+
+  @override
+  List<Object?> get props => [name, character, profilePath];
 }

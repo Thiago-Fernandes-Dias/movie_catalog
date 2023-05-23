@@ -14,10 +14,14 @@ class MoviesRepositoryImpl implements MoviesRepository {
 
   @override
   Future<MovieDetails> getMovieDetails(String movieId) async {
-    final url = '$_path/$movieId';
-    final response = await tmdbClient.get(url);
-    final movieDetails = movieDetailsSerializer.from(response);
-    return movieDetails;
+    try {
+      final response = await tmdbClient.get('$_path/$movieId');
+      final movieDetails = movieDetailsSerializer.from(response);
+      return movieDetails;
+    } on TMDBRequestError catch (error) {
+      if (error.code == TMDBErrorCode.resourceNotFound) throw MovieNotFoundException();
+      rethrow;
+    }
   }
 
   @override
@@ -38,10 +42,14 @@ class MoviesRepositoryImpl implements MoviesRepository {
 
   @override
   Future<Credits> getMovieCredits(String movieId) async {
-    final url = '$_path/$movieId/credits';
-    final response = await tmdbClient.get(url);
-    final credits = creditsSerializer.from(response);
-    return credits;
+    try {
+      final response = await tmdbClient.get('$_path/$movieId/credits');
+      final credits = creditsSerializer.from(response);
+      return credits;
+    } on TMDBRequestError catch (error) {
+      if (error.code == TMDBErrorCode.resourceNotFound) throw MovieNotFoundException();
+      rethrow;
+    }
   }
 
   final _path = 'movie';

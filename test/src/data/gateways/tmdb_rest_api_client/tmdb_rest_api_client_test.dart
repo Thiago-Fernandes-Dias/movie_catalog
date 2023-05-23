@@ -15,7 +15,7 @@ class ClientMock extends Mock implements Client {}
 class InternetConnectionCheckerPlusMock extends Mock implements InternetConnectionCheckerPlus {}
 
 void main() {
-  group('TMDBRestApiClient', () {
+  group('TMDBRestApiClientImpl', () {
     late final TMDBRestApiClient tmdbRestApiClient;
     late final Client client;
     late final InternetConnectionCheckerPlus internetConnectionCheckerPlus;
@@ -78,5 +78,7 @@ void main() {
       final popularMoviesFuture = tmdbRestApiClient.get('movie/popular');
       expect(popularMoviesFuture, throwsA(isA<RequestTimeoutException>()));
     });
+
+    group('getPopularMovies', () {});
   });
 }

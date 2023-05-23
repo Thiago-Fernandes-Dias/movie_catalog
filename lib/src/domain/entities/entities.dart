@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 import '../enums/movie_status.dart';
 
 part 'cast.dart';

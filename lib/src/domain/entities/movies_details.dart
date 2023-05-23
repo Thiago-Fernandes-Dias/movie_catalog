@@ -1,6 +1,6 @@
 part of 'entities.dart';
 
-class MovieDetails {
+class MovieDetails extends Equatable {
   final int budget;
   final List<Genres> genres;
   final String? homepage;
@@ -20,7 +20,7 @@ class MovieDetails {
   final num voteAverage;
   final int voteCount;
 
-  MovieDetails({
+  const MovieDetails({
     required this.budget,
     required this.genres,
     this.homepage,
@@ -40,5 +40,28 @@ class MovieDetails {
     required this.voteAverage,
     required this.voteCount,
   });
-}
 
+  @override
+  List<Object?> get props {
+    return [
+      budget,
+      genres,
+      homepage,
+      id,
+      originalLanguage,
+      originalTitle,
+      overview,
+      popularity,
+      posterPath,
+      companies,
+      countries,
+      releaseDate,
+      revenue,
+      runtime,
+      status,
+      title,
+      voteAverage,
+      voteCount,
+    ];
+  }
+}
