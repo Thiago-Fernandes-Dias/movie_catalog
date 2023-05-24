@@ -89,7 +89,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
               ],
             );
           } else if (state is MovieDetailsErrorState) {
-            return Center(child: Text(state.error.toString()));
+            return Center(child: Text(state.exception.toString()));
           }
           return nil;
         },

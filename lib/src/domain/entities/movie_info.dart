@@ -1,6 +1,6 @@
 part of 'entities.dart';
 
-class MovieInfo {
+class MovieInfo extends Equatable {
   final int id;
   String? releaseDate;
   final String title;
@@ -21,4 +21,7 @@ class MovieInfo {
       posterPath: json['poster_path'],
     );
   }
+
+  @override
+  List<Object?> get props => [id, releaseDate, title, posterPath];
 }

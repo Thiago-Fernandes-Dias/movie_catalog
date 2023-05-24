@@ -1,29 +1,30 @@
 part of 'movie_details_cubit.dart';
 
 abstract class MovieDetailsState extends Equatable {
-  final MovieDetails? movieDetails;
-  final Credits? movieCredits;
-  final Exception? error;
-
-  const MovieDetailsState({
-    this.movieDetails,
-    this.movieCredits,
-    this.error,
-  });
-
   @override
-  List<Object?> get props => [movieDetails, movieCredits, error];
+  List<Object?> get props => [];
 }
 
 class LoadingMovieDetails extends MovieDetailsState {}
 
 class MovieDetailsErrorState extends MovieDetailsState {
-  const MovieDetailsErrorState({required super.error});
+  MovieDetailsErrorState({required this.exception});
+
+  final BaseException exception;
+
+  @override
+  List<Object?> get props => [...super.props, exception];
 }
 
 class LoadedMovieDetails extends MovieDetailsState {
-  const LoadedMovieDetails({
-    required super.movieCredits,
-    required super.movieDetails,
+  LoadedMovieDetails({
+    required this.movieCredits,
+    required this.movieDetails,
   });
+
+  final MovieDetails movieDetails;
+  final Credits movieCredits;
+
+  @override
+  List<Object?> get props => [...super.props, movieCredits, movieDetails];
 }

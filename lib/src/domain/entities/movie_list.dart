@@ -1,12 +1,12 @@
 part of 'entities.dart';
 
-class MovieList {
+class MovieList extends Equatable {
   final int page;
   final List<MovieInfo> results;
   final int totalPages;
   final int totalResults;
 
-  MovieList({
+  const MovieList({
     required this.page,
     required this.results,
     required this.totalResults,
@@ -28,7 +28,9 @@ class MovieList {
       totalPages: json['total_pages'],
     );
   }
+
+  @override
+  List<Object?> get props => [page, results, totalResults, totalPages];
 }
 
-MovieList parseMovieList(String jsonString) =>
-    MovieList.fromJson(jsonDecode(jsonString));
+MovieList parseMovieList(String jsonString) => MovieList.fromJson(jsonDecode(jsonString));

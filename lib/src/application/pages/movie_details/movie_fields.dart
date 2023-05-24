@@ -3,40 +3,42 @@ part of 'movie_details_page.dart';
 class _MovieFields extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var movie = context.read<MovieDetailsCubit>().state.movieDetails!;
-    var localization = AppLocalizations.of(context);
+    final state = context.read<MovieDetailsCubit>().state;
+    if (state is LoadedMovieDetails) {
+      final movie = state.movieDetails!;
+      final localization = AppLocalizations.of(context);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          fieldTitle(localization.about),
-          _MovieData(fieldName: localization.title, info: movie.originalTitle),
-          _MovieData(
-            fieldName: localization.lang,
-            info: movie.originalLanguage,
-          ),
-          _MovieData(fieldName: localization.overview, info: validate(movie.overview)),
-          _MovieData(
-            fieldName: localization.genres,
-            info: movie.genres.isNotEmpty
-                ? movie.genres.map((item) => item.name).join(', ')
-                : localization.notFount,
-          ),
-          _MovieData(
-            fieldName: localization.comps,
-            info: movie.companies.isNotEmpty
-                ? movie.companies.map((item) => item.name).join(', ')
-                : localization.notFount,
-          ),
-          _MovieData(fieldName: localization.release, info: movie.releaseDate ?? ''),
-          _MovieData(fieldName: localization.votes, info: validate('${movie.voteCount}')),
-          _MovieData(fieldName: localization.rate, info: validate('${movie.voteAverage}')),
-          _MovieData(fieldName: localization.status, info: movie.status.toString()),
-        ],
-      ),
-    );
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            fieldTitle(localization.about),
+            _MovieData(fieldName: localization.title, info: movie.originalTitle),
+            _MovieData(
+              fieldName: localization.lang,
+              info: movie.originalLanguage,
+            ),
+            _MovieData(fieldName: localization.overview, info: validate(movie.overview)),
+            _MovieData(
+              fieldName: localization.genres,
+              info: movie.genres.isNotEmpty ? movie.genres.map((item) => item.name).join(', ') : localization.notFount,
+            ),
+            _MovieData(
+              fieldName: localization.comps,
+              info: movie.companies.isNotEmpty
+                  ? movie.companies.map((item) => item.name).join(', ')
+                  : localization.notFount,
+            ),
+            _MovieData(fieldName: localization.release, info: movie.releaseDate ?? ''),
+            _MovieData(fieldName: localization.votes, info: validate('${movie.voteCount}')),
+            _MovieData(fieldName: localization.rate, info: validate('${movie.voteAverage}')),
+            _MovieData(fieldName: localization.status, info: movie.status.toString()),
+          ],
+        ),
+      );
+    }
+    return const SizedBox();
   }
 }
 
@@ -51,15 +53,8 @@ class _MovieData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const movieField = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 16,
-      color: Colors.black
-    );
-    const movieInfo = TextStyle(
-      fontWeight: FontWeight.w300,
-      color: Colors.black
-    );
+    const movieField = TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.black);
+    const movieInfo = TextStyle(fontWeight: FontWeight.w300, color: Colors.black);
 
     return Container(
       padding: const EdgeInsets.only(top: 10),

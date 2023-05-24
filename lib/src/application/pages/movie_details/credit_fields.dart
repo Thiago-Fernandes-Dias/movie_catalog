@@ -5,31 +5,34 @@ class CreditsFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var casts = context.read<MovieDetailsCubit>().state.movieCredits!.cast;
-
-    return Container(
-      padding: const EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 40),
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          fieldTitle(AppLocalizations.of(context).cast),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: MediaQuery.of(context).size.width >= 650 ? 3 : 1,
-                mainAxisSpacing: 20,
-                mainAxisExtent: 150,
+    final state = context.read<MovieDetailsCubit>().state;
+    if (state is LoadedMovieDetails) {
+      final casts = state.movieCredits.cast;
+      return Container(
+        padding: const EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 40),
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            fieldTitle(AppLocalizations.of(context).cast),
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: MediaQuery.of(context).size.width >= 650 ? 3 : 1,
+                  mainAxisSpacing: 20,
+                  mainAxisExtent: 150,
+                ),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: casts.length,
+                itemBuilder: (context, i) => _CastTile(cast: casts[i]),
               ),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: casts.length,
-              itemBuilder: (context, i) => _CastTile(cast: casts[i]),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    }
+    return const SizedBox();
   }
 }
 

@@ -62,5 +62,17 @@ void main() {
         await expectLater(creditsFuture, throwsA(isA<MovieNotFoundException>()));
       });
     });
+
+    group('getTopRatedMovies and getPopularMovies', () {
+      test('Both methods should return a MovieList instance if the request is successful', () async {
+        const page = 1;
+        when(() => tmdbRestApiClient.get(any())).thenAnswer((_) async => movieListSampleMap);
+        final movieListSample = movieListSerializer.from(movieListSampleMap);
+        final topRatedMovies = await moviesRepository.getTopRatedMovies(page);
+        final popularMovies = await moviesRepository.getPopularMovies(page);
+        expect(topRatedMovies, movieListSample);
+        expect(popularMovies, movieListSample);
+      });
+    });
   });
 }
