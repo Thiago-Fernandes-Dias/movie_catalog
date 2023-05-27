@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/faults/exceptions/exceptions.dart';
@@ -11,10 +14,13 @@ part 'paginated_movie_lists_state.dart';
 abstract class PaginatedMovieListsBloc extends Bloc<PaginatedMovieListsEvents, PaginatedMovieListsState> {
   PaginatedMovieListsBloc() : super(PaginatedMovieListsInitial()) {
     on<LoadNextMovieEvent>(loadNextPageHandler, transformer: sequential());
+    on<ResetPaginationEvent>(resetPaginationHandler, transformer: sequential());
   }
 
+  @protected
   Future<MovieList> fetchMovieListPage(int page);
 
+  @protected
   Future<void> loadNextPageHandler(LoadNextMovieEvent event, Emitter<PaginatedMovieListsState> emitter) async {
     final state = this.state;
     if (state is PaginatedMovieListsInitial) {
@@ -64,6 +70,13 @@ abstract class PaginatedMovieListsBloc extends Bloc<PaginatedMovieListsEvents, P
       emitter(newState);
     } on BaseException catch (exception) {
       emitter(LoadingInitialPageError(exception));
+    }
+  }
+
+  @protected
+  void resetPaginationHandler(ResetPaginationEvent event, Emitter<PaginatedMovieListsState> emitter) {
+    if (state is LoadedMoviesState) {
+      emitter(PaginatedMovieListsInitial());
     }
   }
 }

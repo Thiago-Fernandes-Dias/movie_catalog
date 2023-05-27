@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:movie_list/src/application/blocs/paginated_movie_lists_cubit/paginated_movie_lists_bloc.dart';
-import 'package:movie_list/src/application/blocs/paginated_movie_lists_cubit/popular_movies_bloc.dart';
-import 'package:movie_list/src/application/blocs/paginated_movie_lists_cubit/top_rated_movies_bloc.dart';
+import 'package:movie_list/src/application/blocs/paginated_movie_lists_bloc/paginated_movie_lists_bloc.dart';
+import 'package:movie_list/src/application/blocs/paginated_movie_lists_bloc/popular_movies_bloc.dart';
+import 'package:movie_list/src/application/blocs/paginated_movie_lists_bloc/top_rated_movies_bloc.dart';
 import 'package:movie_list/src/data/repositories/repositories.dart';
 
 import '../../../../fixtures/fixtures.dart';
