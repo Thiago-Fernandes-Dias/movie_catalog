@@ -2,11 +2,11 @@ part of 'entities.dart';
 
 class MovieInfo extends Equatable {
   final int id;
-  String? releaseDate;
+  final String? releaseDate;
   final String title;
-  String? posterPath;
+  final String? posterPath;
 
-  MovieInfo({
+  const MovieInfo({
     required this.id,
     this.releaseDate,
     required this.title,

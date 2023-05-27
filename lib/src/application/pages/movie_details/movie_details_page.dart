@@ -53,7 +53,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
           if (state is LoadingMovieDetails) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is LoadedMovieDetails) {
-            var movie = state.movieDetails!;
+            var movie = state.movieDetails;
             return ListView(
               padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width >= 650 ? 200 : 0,

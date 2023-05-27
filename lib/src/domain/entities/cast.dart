@@ -1,11 +1,12 @@
 part of 'entities.dart';
 
+@immutable
 class Cast extends Equatable {
   final String name;
   final String character;
-  String? profilePath;
+  final String? profilePath;
 
-  Cast({
+  const Cast({
     required this.name,
     required this.character,
     this.profilePath,

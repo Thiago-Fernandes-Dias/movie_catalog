@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
 import '../enums/movie_status.dart';
 

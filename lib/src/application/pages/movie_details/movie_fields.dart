@@ -5,7 +5,7 @@ class _MovieFields extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.read<MovieDetailsCubit>().state;
     if (state is LoadedMovieDetails) {
-      final movie = state.movieDetails!;
+      final movie = state.movieDetails;
       final localization = AppLocalizations.of(context);
 
       return Container(

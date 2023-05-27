@@ -362,3 +362,17 @@ final movieListSampleMap = {
   'total_pages': 556,
   'total_results': 11104
 };
+
+const movieListPage1 = MovieList(
+  page: 1,
+  results: [MovieInfo(id: 1, title: 'Spirited Away'), MovieInfo(id: 2, title: 'Princess Mononoke')],
+  totalPages: 2,
+  totalResults: 4,
+);
+
+const movieListPage2 = MovieList(
+  page: 2,
+  results: [MovieInfo(id: 1, title: 'Goodfellas'), MovieInfo(id: 2, title: 'The Godfather')],
+  totalPages: 2,
+  totalResults: 4,
+);

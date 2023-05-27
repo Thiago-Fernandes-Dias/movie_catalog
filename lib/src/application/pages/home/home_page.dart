@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nil/nil.dart';
 
-import '../../../core/faults/exceptions/exceptions.dart';
 import '../../../domain/entities/entities.dart';
 import '../../blocs/home_movie_list_cubit/home_movie_list_cubit.dart';
 import '../../l10n/app_localizations.dart';

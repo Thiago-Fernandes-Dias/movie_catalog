@@ -15,7 +15,7 @@ void main() {
     late final MovieDetails movieDetailsSample;
     late final Credits creditsSample;
 
-    const _movieId = '1';
+    const movieId = '1';
 
     setUpAll(() {
       moviesRepository = MockMoviesRepository();
@@ -28,11 +28,11 @@ void main() {
     MovieDetailsCubitImpl buildMovieDetailsCubit() => MovieDetailsCubitImpl(moviesRepository);
 
     void stubMovieDetailsFetch() {
-      when(() => moviesRepository.getMovieDetails(_movieId)).thenAnswer((_) async => movieDetailsSample);
+      when(() => moviesRepository.getMovieDetails(movieId)).thenAnswer((_) async => movieDetailsSample);
     }
 
     void stubMovieCreditsFetch() {
-      when(() => moviesRepository.getMovieCredits(_movieId)).thenAnswer((_) async => creditsSample);
+      when(() => moviesRepository.getMovieCredits(movieId)).thenAnswer((_) async => creditsSample);
     }
 
     group('fetchMovieDetails', () {
@@ -43,7 +43,7 @@ void main() {
           stubMovieDetailsFetch();
           stubMovieCreditsFetch();
         },
-        act: (bloc) => bloc.fetchMovieDetails(_movieId),
+        act: (bloc) => bloc.fetchMovieDetails(movieId),
         expect: () {
           return [
             LoadingMovieDetails(),
@@ -56,10 +56,10 @@ void main() {
         'Emits an error state when the movie details is not fetched',
         build: buildMovieDetailsCubit,
         setUp: () {
-          when(() => moviesRepository.getMovieDetails(_movieId)).thenThrow(MovieNotFoundException());
+          when(() => moviesRepository.getMovieDetails(movieId)).thenThrow(MovieNotFoundException());
           stubMovieCreditsFetch();
         },
-        act: (bloc) => bloc.fetchMovieDetails(_movieId),
+        act: (bloc) => bloc.fetchMovieDetails(movieId),
         expect: () {
           return [
             LoadingMovieDetails(),
@@ -73,9 +73,9 @@ void main() {
         build: buildMovieDetailsCubit,
         setUp: () {
           stubMovieDetailsFetch();
-          when(() => moviesRepository.getMovieCredits(_movieId)).thenThrow(MovieNotFoundException());
+          when(() => moviesRepository.getMovieCredits(movieId)).thenThrow(MovieNotFoundException());
         },
-        act: (bloc) => bloc.fetchMovieDetails(_movieId),
+        act: (bloc) => bloc.fetchMovieDetails(movieId),
         expect: () {
           return [
             LoadingMovieDetails(),
