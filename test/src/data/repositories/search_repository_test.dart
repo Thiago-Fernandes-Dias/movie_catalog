@@ -20,9 +20,11 @@ void main() {
 
     group('searchMoviesByTitle', () {
       test('returns a MovieList for the movies which title matches the query', () async {
-        const query = 'query';
-        when(() => tmdbRestApiClient.get('search/movie?query=$query')).thenAnswer((_) async => searchSampleMap);
-        final searchResults = await searchRepository.searchMoviesByTitle(query);
+        const query = 'query', page = 1;
+        when(() => tmdbRestApiClient.get('search/movie?query=$query&page=$page')).thenAnswer(
+          (_) async => searchSampleMap,
+        );
+        final searchResults = await searchRepository.searchMoviesByTitle(query, page);
         final searchSample = movieListSerializer.from(searchSampleMap);
         expect(searchResults, searchSample);
       });

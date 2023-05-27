@@ -34,12 +34,12 @@ class HomeMovieListCubitImpl extends HomeMovieListCubit {
       emit(HomeMovieListErrorState(exception: e));
     }
   }
-  
+
   @override
   Future<void> searchForMovies(String searchTerm) async {
     emit(LoadingSearchResults(searchTerm: searchTerm));
     try {
-      final searchResults = await _searchRepository.searchMoviesByTitle(searchTerm);
+      final searchResults = await _searchRepository.searchMoviesByTitle(searchTerm, 1);
       emit(LoadedSearchResults(searchResults: searchResults.results, searchTerm: searchTerm));
     } on BaseException catch (e) {
       emit(MovieSearchError(exception: e, searchTerm: searchTerm));
