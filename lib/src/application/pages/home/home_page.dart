@@ -1,19 +1,17 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nil/nil.dart';
 
 import '../../../domain/entities/entities.dart';
-import '../../blocs/home_movie_list_cubit/home_movie_list_cubit.dart';
+import '../../blocs/search_for_movies_bloc/search_for_movies_bloc.dart';
 import '../../l10n/app_localizations.dart';
 import '../../ui/effects/shimmer_loading/shimmer_loading.dart';
 import '../../widgets/shared/text_format.dart';
-import '../../widgets/tmdb.dart';
+import 'movie_lists_body.dart';
 
+part 'home_page_body.dart';
 part 'result_reader.dart';
 part 'search_bar.dart';
-part 'home_page_body.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -25,7 +23,7 @@ class HomePage extends StatelessWidget {
         title: const Text('Movies Catalog'),
         centerTitle: true,
       ),
-      body: const _HomePageBody(),
+      body: const HomePageBody(),
     );
   }
 }

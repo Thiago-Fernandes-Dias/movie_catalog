@@ -1,16 +1,29 @@
 part of 'home_page.dart';
 
-class _ResultHeader extends StatelessWidget {
-  const _ResultHeader({required this.searchTerm});
+@visibleForTesting
+class ResultHeader extends StatefulWidget {
+  const ResultHeader({required this.searchTerm, super.key});
 
   final String searchTerm;
 
   @override
+  State<ResultHeader> createState() => _ResultHeaderState();
+}
+
+class _ResultHeaderState extends State<ResultHeader> {
+  late final SearchForMoviesBloc _searchForMoviesBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchForMoviesBloc = context.read();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final homeMovieListCubit = context.read<HomeMovieListCubit>();
     return WillPopScope(
       onWillPop: () async {
-        await homeMovieListCubit.getHomeMovieLists();
+        _cancelSearch();
         return false;
       },
       child: Padding(
@@ -19,14 +32,14 @@ class _ResultHeader extends StatelessWidget {
           children: [
             Expanded(
               child: fieldTitle(
-                '${AppLocalizations.of(context).resultsHeader} "$searchTerm"',
+                '${AppLocalizations.of(context).resultsHeader} "${widget.searchTerm}"',
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: IconButton(
                 splashRadius: 15.0,
-                onPressed: homeMovieListCubit.getHomeMovieLists,
+                onPressed: _cancelSearch,
                 icon: const Icon(
                   Icons.clear,
                   color: Colors.red,
@@ -39,5 +52,9 @@ class _ResultHeader extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _cancelSearch() {
+    _searchForMoviesBloc.add(CancelSearch());
   }
 }

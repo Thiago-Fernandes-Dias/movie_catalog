@@ -5,9 +5,11 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 
 import '../../data/gateways/gateways.dart';
 import '../../data/repositories/repositories.dart';
-import 'home_movie_list_cubit/home_movie_list_cubit.dart';
 import 'internet_connection_cubit/internet_connection_cubit.dart';
 import 'movie_details/movie_details_cubit.dart';
+import 'paginated_movie_lists_bloc/popular_movies_bloc.dart';
+import 'paginated_movie_lists_bloc/top_rated_movies_bloc.dart';
+import 'search_for_movies_bloc/search_for_movies_bloc.dart';
 
 class BlocsProvider extends StatelessWidget {
   const BlocsProvider({super.key, required this.child});
@@ -26,13 +28,11 @@ class BlocsProvider extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<HomeMovieListCubit>(create: (_) {
-          return HomeMovieListCubitImpl(moviesRepository, searchRepository);
-        }),
+        BlocProvider<SearchForMoviesBloc>(create: (_) => SearchForMoviesBlocImpl(searchRepository)),
+        BlocProvider<PopularMoviesBloc>(create: (_) => PopularMoviesBloc(moviesRepository)),
+        BlocProvider<TopRatedMoviesBloc>(create: (_) => TopRatedMoviesBloc(moviesRepository)),
         BlocProvider<MovieDetailsCubit>(
-          create: (_) {
-            return MovieDetailsCubitImpl(moviesRepository);
-          },
+          create: (_) => MovieDetailsCubitImpl(moviesRepository),
         ),
         BlocProvider<InternetConnectionCubit>(
           create: (_) {

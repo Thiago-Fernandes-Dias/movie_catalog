@@ -1,38 +1,43 @@
 part of 'home_page.dart';
 
-class _SearchBar extends StatefulWidget {
-  const _SearchBar();
+@visibleForTesting
+class SearchBar extends StatefulWidget {
+  const SearchBar({super.key});
 
   @override
-  State<_SearchBar> createState() => _SearchBarState();
+  State<SearchBar> createState() => _SearchBarState();
 }
 
-class _SearchBarState extends State<_SearchBar> {
+class _SearchBarState extends State<SearchBar> {
   late final TextEditingController _controller;
-  late final HomeMovieListCubit _homeMovieListCubit;
+  late final SearchForMoviesBloc _searchForMoviesBloc;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _homeMovieListCubit = context.read();
+    _searchForMoviesBloc = context.read();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
+    _controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return BlocListener<SearchForMoviesBloc, SearchForMoviesState>(
+      listener: (_, state) {
+        if (state is SearchForMoviesInitial) _controller.clear();
+      },
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         color: const Color.fromARGB(255, 245, 245, 245),
         child: Focus(
           onFocusChange: (hasFocus) {
             if (!hasFocus) {
-              _searchAction(_controller.text);
+              _searchForMovies(_controller.text);
             }
           },
           child: TextField(
@@ -53,15 +58,16 @@ class _SearchBarState extends State<_SearchBar> {
                   horizontal: 10,
                   vertical: 10,
                 ),
-                onPressed: () => _searchAction(_controller.text),
+                onPressed: () => _searchForMovies(_controller.text),
               ),
             ),
           ),
         ),
+      ),
     );
   }
 
-  void _searchAction(String term) {
-    _homeMovieListCubit.searchForMovies(term);
+  void _searchForMovies(String term) {
+    _searchForMoviesBloc.add(SearchForMoviesByName(searchTerm: term));
   }
 }
