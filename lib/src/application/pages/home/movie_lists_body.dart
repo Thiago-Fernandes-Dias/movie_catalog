@@ -13,6 +13,7 @@ import '../../l10n/app_localizations.dart';
 import '../../ui/effects/shimmer_loading/shimmer_loading.dart';
 import '../../widgets/shared/text_format.dart';
 
+@visibleForTesting
 class MovieListsBody extends StatefulWidget {
   const MovieListsBody({super.key});
 
@@ -32,6 +33,13 @@ class _MovieListsBodyState extends State<MovieListsBody> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _topRatedMoviesBloc.add(ResetPaginationEvent());
+    _popularMoviesBloc.add(ResetPaginationEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     return Shimmer(
@@ -46,7 +54,11 @@ class _MovieListsBodyState extends State<MovieListsBody> {
               BlocBuilder<TopRatedMoviesBloc, PaginatedMovieListsState>(
                 bloc: _topRatedMoviesBloc,
                 builder: (context, state) {
-                  if (state is LoadedMoviesState) return _MovieListsHorizontalListBuilder(state.movies);
+                  if (state is LoadedMoviesState)
+                    return _MovieListsHorizontalListBuilder(
+                      movies: state.movies,
+                      loadMoreCB: () => _topRatedMoviesBloc.add(LoadNextMovieEvent()),
+                    );
                   return const SizedBox();
                 },
               ),
@@ -61,7 +73,11 @@ class _MovieListsBodyState extends State<MovieListsBody> {
               BlocBuilder<PopularMoviesBloc, PaginatedMovieListsState>(
                 bloc: _popularMoviesBloc,
                 builder: (context, state) {
-                  if (state is LoadedMoviesState) return _MovieListsHorizontalListBuilder(state.movies);
+                  if (state is LoadedMoviesState)
+                    return _MovieListsHorizontalListBuilder(
+                      movies: state.movies,
+                      loadMoreCB: () => _popularMoviesBloc.add(LoadNextMovieEvent()),
+                    );
                   return const SizedBox();
                 },
               ),
@@ -73,31 +89,57 @@ class _MovieListsBodyState extends State<MovieListsBody> {
   }
 }
 
-class _MovieListsHorizontalListBuilder extends StatelessWidget {
-  const _MovieListsHorizontalListBuilder(this.movies);
+class _MovieListsHorizontalListBuilder extends StatefulWidget {
+  const _MovieListsHorizontalListBuilder({
+    required this.movies,
+    required this.loadMoreCB,
+  });
 
+  final VoidCallback loadMoreCB;
   final List<MovieInfo> movies;
 
   @override
+  State<_MovieListsHorizontalListBuilder> createState() => _MovieListsHorizontalListBuilderState();
+}
+
+class _MovieListsHorizontalListBuilderState extends State<_MovieListsHorizontalListBuilder> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()..addListener(_scrollEndListener);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController
+      ..removeListener(_scrollEndListener)
+      ..dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.75,
+    return SizedBox(
+      height: 250,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
+        controller: _scrollController,
         cacheExtent: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemCount: movies.length,
+        itemCount: widget.movies.length,
         separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => context.push('/movie/${movies[index].id}'),
+            onTap: () => context.push('/movie/${widget.movies[index].id}'),
             child: AspectRatio(
               aspectRatio: .67,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: CachedNetworkImage(
-                  imageUrl: '${env.tmdbImageUrl}${movies[index].posterPath}',
+                  imageUrl: '${env.tmdbImageUrl}${widget.movies[index].posterPath}',
                   fit: BoxFit.fitHeight,
                   placeholder: (_, ___) {
                     return ShimmerLoading(
@@ -122,5 +164,13 @@ class _MovieListsHorizontalListBuilder extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _scrollEndListener() {
+    if (!_scrollController.hasClients) return;
+    if (!_scrollController.position.hasPixels) return;
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      widget.loadMoreCB();
+    }
   }
 }
