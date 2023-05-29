@@ -11,11 +11,76 @@ import 'errors/errors.dart';
 
 export 'errors/errors.dart';
 
+typedef OnRequestCallback = void Function(Uri uri, {Map<String, dynamic>? data});
+typedef OnResponseCallback = void Function(Map<String, dynamic> response);
+typedef OnBaseExceptionCallback = void Function(BaseException error);
+
+@visibleForTesting
+abstract class OnRequestCallbackObserver {
+  void call(Uri uri, {Map<String, dynamic>? data});
+}
+
+@visibleForTesting
+abstract class OnResponseCallbackObserver {
+  void call(Map<String, dynamic> response);
+}
+
+@visibleForTesting
+abstract class OnBaseExceptionCallbackObserver {
+  void call(BaseException error);
+}
+
 abstract class TMDBRestApiClient {
+  final _responseListeners = <OnResponseCallback>[];
+  final _requestListeners = <OnRequestCallback>[];
+  final _errorListeners = <OnBaseExceptionCallback>[];
+
+  void onRequest(OnRequestCallback fn) {
+    if (_requestListeners.contains(fn)) return;
+    _requestListeners.add(fn);
+  }
+
+  void removeOnRequestListener(OnRequestCallback fn) {
+    _requestListeners.remove(fn);
+  }
+
+  void onResponse(OnResponseCallback fn) {
+    if (_responseListeners.contains(fn)) return;
+    _responseListeners.add(fn);
+  }
+
+  void removeOnResponseListener(OnResponseCallback fn) {
+    _responseListeners.remove(fn);
+  }
+
+  void onError(OnBaseExceptionCallback fn) {
+    if (_errorListeners.contains(fn)) return;
+    _errorListeners.add(fn);
+  }
+
+  void removeOnErrorListener(OnBaseExceptionCallback fn) {
+    _errorListeners.remove(fn);
+  }
+
+  @protected
+  void executeOnRequestCallbacks(Uri uri, {Map<String, dynamic>? data}) {
+    for (final fn in _requestListeners) fn(uri, data: null);
+  }
+
+  @protected
+  void executeOnResponseCallbacks(Map<String, dynamic> response) {
+    for (final fn in _responseListeners) fn(response);
+  }
+
+  @protected
+  void executeOnErrorCallbacks(BaseException error) {
+    for (final fn in _errorListeners) fn(error);
+  }
+
   Future<Map<String, dynamic>> get(String path);
 }
 
-class TMDBRestApiClientImpl implements TMDBRestApiClient {
+class TMDBRestApiClientImpl extends TMDBRestApiClient {
   late final http.Client _httpClient;
   late final InternetConnectionCheckerPlus _internetConnectionChecker;
   late final TMDBUrlBuilder _tmdbUrlBuilder;
@@ -38,27 +103,35 @@ class TMDBRestApiClientImpl implements TMDBRestApiClient {
     final response = await _execRequest(uri: resourceUri);
     final responseParsed = await compute(jsonDecode, response.body);
     _verifyStatusCode(response.statusCode, responseParsed);
+    executeOnResponseCallbacks(responseParsed);
     return responseParsed;
   }
 
   void _verifyStatusCode(int statusCode, Map<String, dynamic> responseBody) {
     switch (statusCode) {
-      case 200:
-      case 201:
+      case >= 200 && < 400:
         return;
       default:
-        throw TMDBRequestError.fromJsonResponse(responseBody);
+        final exception = TMDBRequestError.fromJsonResponse(responseBody);
+        for (final fn in _errorListeners) fn(exception);
+        throw exception;
     }
   }
 
   Future<http.Response> _execRequest({required Uri uri}) async {
+    BaseException? exception;
+    executeOnRequestCallbacks(uri);
     try {
-      final response = _httpClient.get(uri);
+      final response = await _httpClient.get(uri);
       return response;
     } on TimeoutException {
-      throw RequestTimeoutException();
+      exception = RequestTimeoutException();
+      executeOnErrorCallbacks(exception);
+      throw exception;
     } on Exception catch (_) {
-      throw RequestUnknownException('Request error');
+      exception = RequestUnknownException('Unknown error');
+      executeOnErrorCallbacks(exception);
+      throw exception;
     }
   }
 

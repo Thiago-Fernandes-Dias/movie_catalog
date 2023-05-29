@@ -32,9 +32,9 @@ void main() {
 
       test("Throws a MovieNotFoundException if the movie doesn't exists in the database", () async {
         const movieId = '2';
-        const exception = TMDBRequestError(
+        final exception = TMDBRequestError(
+          'Movie not found',
           code: TMDBErrorCode.resourceNotFound,
-          message: 'Movie not found',
         );
         when(() => tmdbRestApiClient.get('movie/$movieId')).thenThrow(exception);
         final movieDetailsFuture = moviesRepository.getMovieDetails(movieId);
@@ -53,9 +53,9 @@ void main() {
 
       test("Throws a MovieNotFoundException if the movie doesn't exists in the database", () async {
         const movieId = '2';
-        const exception = TMDBRequestError(
+        final exception = TMDBRequestError(
+          'Movie not found',
           code: TMDBErrorCode.resourceNotFound,
-          message: 'Movie not found',
         );
         when(() => tmdbRestApiClient.get('movie/$movieId/credits')).thenThrow(exception);
         final creditsFuture = moviesRepository.getMovieCredits(movieId);

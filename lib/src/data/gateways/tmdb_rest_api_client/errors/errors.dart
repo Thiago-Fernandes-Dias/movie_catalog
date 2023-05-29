@@ -1,3 +1,4 @@
+import '../../../../core/faults/exceptions/exceptions.dart';
 import '../../../serializers/serializer.dart';
 import '../enums/enums.dart';
 
